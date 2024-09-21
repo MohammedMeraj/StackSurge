@@ -1,8 +1,9 @@
+// app/layout.tsx
+
 import type { Metadata } from "next";
-
 import "./globals.css";
-
 import { Literata } from 'next/font/google';
+
 
 // Configure the font
 const literata = Literata({
@@ -17,15 +18,16 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en">
-     
+    
+      <html lang="en">
         <body className={literata.className}>
-        {children}
-      </body>
-    </html>
+          {children} {/* Render the page content */}
+        </body>
+      </html>
+ 
   );
 }
