@@ -1,3 +1,4 @@
+
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
@@ -13,7 +14,7 @@ export async function middleware(request: NextRequest) {
   
 }
  
-// See "Matching Paths" below to learn more
+// See "Matching Paths" below to learn mo
 export const config = {
   matcher: ['/dashboard'],
 }
