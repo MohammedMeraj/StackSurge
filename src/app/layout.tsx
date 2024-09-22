@@ -5,6 +5,7 @@ import "./globals.css";
 import { Literata } from 'next/font/google';
 
 
+
 // Configure the font
 const literata = Literata({
   subsets: ['latin'],
@@ -22,12 +23,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    
+   
       <html lang="en">
         <body className={literata.className}>
           {children} {/* Render the page content */}
         </body>
       </html>
+   
  
   );
 }
