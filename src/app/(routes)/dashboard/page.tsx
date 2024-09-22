@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { LogoutLink, useKindeBrowserClient } from '@kinde-oss/kinde-auth-nextjs'
 import React, { useEffect } from 'react'
 
-function page() {
+function Page() {
 
   const {user} = useKindeBrowserClient();
 
@@ -21,4 +21,4 @@ function page() {
   )
 }
 
-export default page
+export default Page
