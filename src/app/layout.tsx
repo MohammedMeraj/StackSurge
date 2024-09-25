@@ -3,6 +3,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Literata } from 'next/font/google';
+import { ConvexClientProvider } from "./ConvexClientProvider";
 
 
 
@@ -26,7 +27,9 @@ export default function RootLayout({
    
       <html lang="en">
         <body className={literata.className}>
+          <ConvexClientProvider>
           {children} {/* Render the page content */}
+          </ConvexClientProvider>
         </body>
       </html>
    
