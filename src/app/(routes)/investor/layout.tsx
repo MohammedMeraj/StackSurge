@@ -1,10 +1,8 @@
-// app/layout.tsx
+// dashboard/layout.tsx
+import Side from "@/app/_components/Side";
 
 import type { Metadata } from "next";
-import "./globals.css";
 import { Literata } from 'next/font/google';
-import { ConvexClientProvider } from "./ConvexClientProvider";
-
 
 
 
@@ -16,8 +14,8 @@ const literata = Literata({
 });
 
 export const metadata: Metadata = {
-  title: "Stack Surge",
-  description: "Investor Start-Up Association Plaform",
+  title: "Dashboard",
+  description: "Dashboard : Investor",
 };
 
 export default function RootLayout({
@@ -29,14 +27,14 @@ export default function RootLayout({
    
     <html lang="en">
     <body className={literata.className}>
-      
-        
-        <div>
-          <ConvexClientProvider>
-            {children}
-          </ConvexClientProvider>
+      <div className="grid grid-cols-12 min-h-screen">
+        <div className="col-span-3">
+          <Side />
         </div>
-      
+        <div className="col-span-9 h-screen overflow-y-scroll">
+            {children} {/* Render the page content */}
+        </div>
+      </div>
     </body>
   </html>
  

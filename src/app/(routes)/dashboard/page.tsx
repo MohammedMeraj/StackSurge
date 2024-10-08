@@ -6,6 +6,8 @@ import React, { useEffect, useState } from 'react'
 import { api } from '../../../../convex/_generated/api'
 
 const Page: React.FC = () => {  
+
+
   const convex = useConvex();
   const { user } = useKindeBrowserClient() as { user: { given_name: string; email: string; picture: string } | null };
 
@@ -58,7 +60,7 @@ const Page: React.FC = () => {
   }, []); // Empty dependency array ensures this effect runs only once
 
   return (
-    <div className="w-screen flex flex-col justify-center items-center h-screen">
+    <div className=" flex flex-col w-full justify-center items-center h-screen">
       <div className="mb-5">Welcome {user?.given_name || userr?.name} </div> 
       
       {/* Display the user's image, use a fallback if picture is null */}
