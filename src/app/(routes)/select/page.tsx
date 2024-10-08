@@ -8,11 +8,11 @@ const Page = () => {
         </div>
         <div className='flex sm:flex-row flex-col items-center justify-center sm:gap-36 gap-20'> 
             <div className='sm:w-72 sm:h-72 w-36 h-36 p-3 border rounded-lg border-gray-200 flex flex-col justify-center items-center gap-4 cursor-pointer hover:border-black'> 
-                <img src="./company.png" alt="company" className='sm:w-48 w-20' />
+                <img src="./investor.png" alt="company" className='sm:w-48 w-20' />
                 <div>Investor</div>
             </div>
             <div className='sm:w-72 sm:h-72 w-36 h-36 p-3 border rounded-lg border-gray-200 flex flex-col justify-center items-center gap-4 cursor-pointer hover:border-black'>
-                <img src="./investor.png" alt="investor" className='sm:w-48 w-20'/>
+                <img src="./company.png" alt="investor" className='sm:w-48 w-20'/>
                 <div>Company</div>
             </div>
         </div>
