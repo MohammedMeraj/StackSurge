@@ -4,6 +4,7 @@ import {
   RegisterLink,
   LoginLink,
 } from "@kinde-oss/kinde-auth-nextjs/components";
+import Link from "next/link";
 
 function Header() {
   return (
@@ -11,10 +12,11 @@ function Header() {
       <div className="mx-auto max-w-screen px-4 sm:px-6 lg:px-8">
         <div className="flex h-20 items-center justify-between pt-3">
           <div className="md:flex md:items-center md:gap-12">
-            <a className="block text-teal-600" href="#">
+            
+            <Link className="block text-teal-600" href="/">
               <span className="sr-only">Home</span>
               <Image src="/logo.svg" alt="logo" width={200} height={200} />
-            </a>
+            </Link>
           </div>
 
           <div className="hidden md:block">

@@ -31,11 +31,11 @@ export default function RootLayout({
     <body className={literata.className}>
       
         
-        <div>
+        
           <ConvexClientProvider>
             {children}
           </ConvexClientProvider>
-        </div>
+       
       
     </body>
   </html>

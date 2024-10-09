@@ -4,6 +4,8 @@ import { LogoutLink, useKindeBrowserClient } from '@kinde-oss/kinde-auth-nextjs'
 import { useConvex, useMutation } from 'convex/react'
 import React, { useEffect, useState } from 'react'
 import { api } from '../../../../convex/_generated/api'
+import Image from 'next/image'
+
 
 const Page: React.FC = () => {  
 
@@ -61,10 +63,12 @@ const Page: React.FC = () => {
 
   return (
     <div className=" flex flex-col w-full justify-center items-center h-screen">
+     
       <div className="mb-5">Welcome {user?.given_name || userr?.name} </div> 
       
       {/* Display the user's image, use a fallback if picture is null */}
-      <img src={user?.picture || userimage?.picture || "/default-profile.png"} alt="User profile" className="mb-5" /> 
+      <Image src={user?.picture || userimage?.picture || ""}  alt="User profile" width={90} height={90} className="mb-5" /> 
+      
 
       <Button>
         <LogoutLink>
