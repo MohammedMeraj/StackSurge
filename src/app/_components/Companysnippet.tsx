@@ -4,10 +4,7 @@ import React from 'react'
 import zomato from '../../../public/zomato.png'
 import Link from 'next/link'
 const Companysnippet = () => {
-    const alertBox = ()=>{
-        alert('StackSurge is currently in development mode, Continue...');
-    }
-    alertBox();
+    
     
   return (
     <div className='p-7 flex flex-col justify-center items-center'>
