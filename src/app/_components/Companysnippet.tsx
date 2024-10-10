@@ -11,7 +11,7 @@ const Companysnippet = () => {
     
   return (
     <div className='p-7 flex flex-col justify-center items-center'>
-        <div className='text-xl self-start font-bold mb-8 text-gray-900'>Explore Start Up's</div>
+        <div className='text-xl self-start font-bold mb-8 text-gray-900'>Explore Start Up&apos;s</div>
         <div className='w-full h-fit py-6 px-8  border border-gray-300 rounded-md'>
          <div className='flex flex-row m-w-[60vw] items-center justify-between'> 
             <div className='flex flex-row gap-3 items-center justify-center'>
