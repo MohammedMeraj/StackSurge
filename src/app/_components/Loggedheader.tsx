@@ -3,6 +3,7 @@
 
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import Image from "next/image";
+import userimage from '../../../public/userimage.jpg';
 
 
 
@@ -24,7 +25,7 @@ function Loggedheader() {
               <ul className="flex items-center gap-6 text-sm">
                 <li>
                   <a
-                    className="text-gray-800 transition hover:text-gray-500 text-lg"
+                    className="text-gray-700 transition hover:text-gray-500 text-sm"
                     href="/"
                   >
                     
@@ -34,7 +35,7 @@ function Loggedheader() {
 
                 <li>
                   <a
-                    className="text-gray-800 transition hover:text-gray-500 text-lg"
+                    className="text-gray-700 transition hover:text-gray-500 text-sm"
                     href="#"
                   >
                     About{" "}
@@ -43,7 +44,7 @@ function Loggedheader() {
 
                 <li>
                   <a
-                    className="text-gray-800 transition hover:text-gray-500 text-lg"
+                    className="text-gray-700 transition hover:text-gray-500 text-sm"
                     href="#"
                   >
                     Documentation{" "}
@@ -59,11 +60,11 @@ function Loggedheader() {
 
               <div className="hidden sm:flex">
                 <div className="rounded-full ml-4 overflow-hidden max-w-6xl flex left-0 w-fit justify-center items-center cursor-pointer border pr-5 pl-1 py-1 text-sm font-medium text-zinc-900 gap-3">
-                  <Image src={ userImage || "" } alt="Profile" width={40} height={40} className=" overflow-hidden rounded-full border border-gray-100"  />
+                  <Image src={ userImage || userimage } alt="Profile" width={40} height={40} className=" overflow-hidden rounded-full border border-gray-100"  />
                   
                   <div className="flex flex-col">
                       <div className="text-xs text-gray-800">Welcome</div>
-                      <div className="text-sm">{user?.given_name}</div>
+                      <div className="text-sm">{user?.given_name || "Loading..."}</div>
                   </div>
                 </div>
               </div>
