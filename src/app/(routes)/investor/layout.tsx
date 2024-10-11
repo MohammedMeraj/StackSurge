@@ -32,6 +32,7 @@ export default function RootLayout({
           <Side />
         </div>
         <div className="col-span-9 h-screen overflow-y-scroll">
+          
             {children} {/* Render the page content */}
         </div>
       </div>
