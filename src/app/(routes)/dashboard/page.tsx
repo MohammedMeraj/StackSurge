@@ -5,9 +5,50 @@ import { useConvex, useMutation } from 'convex/react'
 import React, { useEffect, useState } from 'react'
 import { api } from '../../../../convex/_generated/api'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
 
-const Page: React.FC = () => {  
+type UserPermissionsResponse = {
+  permissions: string[];
+  orgCode: string | null;
+};
+
+
+const Page = () => {  
+   
+
+ const { getPermissions, isAuthenticated } = useKindeBrowserClient();
+ const [permissions, setPermissions] = useState<any | null>(null);
+ const router = useRouter();
+ useEffect(() => {
+  const fetchPermissions = async () => {
+    if (isAuthenticated) {
+      const userPermissions: UserPermissionsResponse = await getPermissions(); // Fetch the permissions
+      setPermissions(userPermissions); // Store the permissions in state
+
+      // Check if 'user:investor' is in the permissions array
+      if (userPermissions.permissions.includes('user:investor')) {
+        if (router) {
+          // Example: navigating to the dashboard
+          router.push('/investor');
+        }
+      } else if(userPermissions.permissions.includes('user:company')){
+        if (router) {
+          // Example: navigating to the dashboard
+          router.push('/company');
+        }
+      }
+
+      console.log('User Permissions:', userPermissions);
+    } else {
+      console.log('User is not authenticated.');
+    }
+  };
+
+  fetchPermissions();
+}, [isAuthenticated, getPermissions]);
+ 
+
 
 
   const convex = useConvex();
@@ -69,6 +110,7 @@ const Page: React.FC = () => {
       {/* Display the user's image, use a fallback if picture is null */}
       <Image src={user?.picture || userimage?.picture || ""}  alt="User profile" width={90} height={90} className="mb-5" /> 
       
+      
 
       <Button>
         <LogoutLink>
@@ -80,3 +122,6 @@ const Page: React.FC = () => {
 };
 
 export default Page;
+
+
+

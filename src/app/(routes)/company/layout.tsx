@@ -1,6 +1,5 @@
-// dashboard/layout.tsx
-import Side from "@/app/_components/Side";
 
+import Companysidebar from "@/app/_components/Companysidebar";
 import type { Metadata } from "next";
 import { Literata } from 'next/font/google';
 
@@ -15,7 +14,7 @@ const literata = Literata({
 
 export const metadata: Metadata = {
   title: "Dashboard",
-  description: "Dashboard : Company",
+  description: "Dashboard : Investor",
 };
 
 export default function RootLayout({
@@ -27,11 +26,13 @@ export default function RootLayout({
    
     <html lang="en">
     <body className={literata.className}>
-      <div className="grid grid-cols-12 min-h-screen">
+      <div className="grid grid-cols-12 min-h-screen bg-white">
         <div className="col-span-3">
-          <Side />
+          {/* sideBar for company  */}
+          <Companysidebar />
         </div>
-        <div className="col-span-9 h-screen overflow-y-scroll bg-white">
+        <div className="col-span-9 h-screen overflow-y-scroll">
+          
             {children} {/* Render the page content */}
         </div>
       </div>
