@@ -3,7 +3,7 @@ import company from '../../../public/company.png';
 import investor from '../../../public/investor.png';
 import Image from 'next/image';
 import Link from 'next/link'
-import { useKindeBrowserClient } from '@kinde-oss/kinde-auth-nextjs';
+
 
 
 
