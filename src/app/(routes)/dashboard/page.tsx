@@ -18,13 +18,13 @@ const Page = () => {
    
 
  const { getPermissions, isAuthenticated } = useKindeBrowserClient();
- const [permissions, setPermissions] = useState<any | null>(null);
+ 
  const router = useRouter();
  useEffect(() => {
   const fetchPermissions = async () => {
     if (isAuthenticated) {
       const userPermissions: UserPermissionsResponse = await getPermissions(); // Fetch the permissions
-      setPermissions(userPermissions); // Store the permissions in state
+      // Store the permissions in state
 
       // Check if 'user:investor' is in the permissions array
       if (userPermissions.permissions.includes('user:investor')) {
