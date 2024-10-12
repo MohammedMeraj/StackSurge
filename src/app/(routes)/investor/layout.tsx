@@ -1,4 +1,5 @@
 // dashboard/layout.tsx
+import Loggedheader from "@/app/_components/Loggedheader";
 import Side from "@/app/_components/Side";
 
 import type { Metadata } from "next";
@@ -32,7 +33,7 @@ export default function RootLayout({
           <Side />
         </div>
         <div className="col-span-9 h-screen overflow-y-scroll">
-          
+          <Loggedheader/>
             {children} {/* Render the page content */}
         </div>
       </div>
