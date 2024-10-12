@@ -39,9 +39,7 @@ const Page = () => {
         }
       }
 
-      console.log('User Permissions:', userPermissions);
-    } else {
-      console.log('User is not authenticated.');
+      
     }
   };
 
