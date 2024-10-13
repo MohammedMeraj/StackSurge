@@ -18,13 +18,13 @@ const SelectRole = () => {
         Excited to Have You! <br/>Are You an Investor or a Company?
         </div>
         <div className='flex sm:flex-row flex-col items-center justify-center sm:gap-36 gap-20'> 
-            <Link href={'/investor'}  className='sm:w-72 sm:h-72 w-36 h-36 p-3 border rounded-lg border-gray-200 flex flex-col justify-center items-center gap-4 cursor-pointer hover:border-black'> 
+            <Link href={'/investor'}  className='sm:w-72 sm:h-72 w-36 h-36 p-3 opacity-75 hover:opacity-100 border-2 rounded-lg border-gray-400 flex flex-col justify-center items-center gap-4 cursor-pointer hover:border-black'> 
                 
-                <Image src={investor} alt="company"  className='sm:w-48 w-20' />
+                <Image src={investor} alt="company"  className='sm:w-48 w-20 ' />
                 <div>Investor</div>
             </Link>
-            <Link href={'/company'} className='sm:w-72 sm:h-72 w-36 h-36 p-3 border rounded-lg border-gray-200 flex flex-col justify-center items-center gap-4 cursor-pointer hover:border-black'>
-            <Image src={company} alt="company"  className='sm:w-48 w-20' />
+            <Link href={'/company'} className='sm:w-72 sm:h-72 w-36 h-36 opacity-75 hover:opacity-100 p-3 border-2 rounded-lg border-gray-400 flex flex-col justify-center items-center gap-4 cursor-pointer hover:border-black'>
+            <Image src={company} alt="company"  className='sm:w-48 w-20 ' />
                 <div>Company</div>
             </Link>
         </div>
