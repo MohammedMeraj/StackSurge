@@ -44,7 +44,7 @@ const Page = () => {
   };
 
   fetchPermissions();
-}, [isAuthenticated, getPermissions]);
+}, [isAuthenticated, getPermissions, router]);
  
 
 
@@ -99,7 +99,7 @@ const Page = () => {
 
     // Fetch the user details only once when the component mounts
     fetchUser();
-  }, []); // Empty dependency array ensures this effect runs only once
+  }, [getUser]); // Empty dependency array ensures this effect runs only once
 
   return (
     <div className=" flex flex-col w-full justify-center items-center h-screen">

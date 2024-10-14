@@ -3,7 +3,7 @@
 import { api } from '../../../../convex/_generated/api'
 import { useQuery } from 'convex/react'
 
-const page = () => {
+const Page = () => {
 
 
         const getAll = useQuery(api.user.getAlluser);
@@ -26,4 +26,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
