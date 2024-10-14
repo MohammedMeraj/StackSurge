@@ -3,6 +3,7 @@ import React from 'react'
 import Image from 'next/image'
 import { ChartColumnIncreasing ,LayoutDashboard,Handshake,PenLine,CircleUser } from 'lucide-react';
 import { LogoutLink } from '@kinde-oss/kinde-auth-nextjs';
+import Link from 'next/link';
 
 
 
@@ -72,8 +73,8 @@ const Companysidebar = () => {
             </li>
 
             <li>
-              <a
-                href="#"
+              <Link
+                href="/company/your-company"
                 className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
               >
                 <PenLine size={20} color="#8f8f8f" strokeWidth={1.75} />
@@ -82,9 +83,9 @@ const Companysidebar = () => {
                 <span
                   className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible"
                 >
-                  Edit Company
+                  Your Company
                 </span>
-              </a>
+              </Link>
             </li>
 
             <li>
@@ -170,21 +171,21 @@ const Companysidebar = () => {
         </li>
 
         <li>
-          <a
-            href="#"
+          <Link
+            href="/"
             className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
           >
             Investors
-          </a>
+          </Link>
         </li>
 
         <li>
-          <a
-            href="#"
+          <Link
+            href="/company/your-company"
             className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
           >
-            Edit Company
-          </a>
+            Your Company
+          </Link>
         </li>
 
         <li>

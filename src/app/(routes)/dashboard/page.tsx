@@ -63,7 +63,8 @@ const Page = () => {
           await createUser({
             name: user.given_name,
             email: user.email,
-            image: user.picture
+            image: user.picture,
+            
           });
           console.log("User created in Convex DB");
         }

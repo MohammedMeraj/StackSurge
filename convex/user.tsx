@@ -16,10 +16,18 @@ export const createUser = mutation({
     args:{
         name:v.string(),
         email:v.string(),
-        image:v.string()
+        image:v.string(),
+       
     },
     handler:async(ctx, args)=> {
        return await ctx.db.insert("user",args);
 
     },
 })
+
+export const getAlluser = query({
+   
+    handler:async(ctx)=>{
+        return await ctx.db.query("user").collect();
+    },
+});
