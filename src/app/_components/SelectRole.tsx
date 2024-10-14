@@ -5,9 +5,7 @@ import company from '../../../public/company.png';
 import investor from '../../../public/investor.png';
 import Image from 'next/image';
 import Link from 'next/link'
-import { mutation } from '../../../convex/_generated/server';
-import { useConvex } from 'convex/react';
-import { useKindeBrowserClient } from '@kinde-oss/kinde-auth-nextjs';
+
 
 
 
