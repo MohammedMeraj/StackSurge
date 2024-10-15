@@ -19,7 +19,7 @@ const formSchema = z.object({
       message: "Company Description must be at least 50 characters.",
     }),
     website: z.string().min(4, {
-      message: "Company Description must be at least 4 characters.",
+      message: "Company Website must be at least 4 characters.",
     }),
     companyEmail: z.string().min(5, {
       message: "Company Email must be at least 5 characters.",
@@ -139,7 +139,7 @@ const Page = () => {
 
     
 
-      <div className='text-xl self-start font-bold mb-8 text-gray-900'>Publish Your Company</div>
+      <div className='text-xl self-start font-bold mb-8 text-gray-900'>Register Your Company</div>
       
       <div className="w-[95%] ml-[15%] mr-[15%] border p-7 rounded-md">
       <div className="text-xl mb-7">Basic Details</div>
