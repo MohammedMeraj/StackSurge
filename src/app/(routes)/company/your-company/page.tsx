@@ -1,6 +1,5 @@
 "use client";
 import { useMutation } from "convex/react";
-import React, { useState } from "react";
 import { api } from "../../../../../convex/_generated/api";
 import {z} from 'zod';
 import { useForm } from "react-hook-form";
@@ -9,6 +8,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+import { useEffect, useState } from "react";
 
 
 const formSchema = z.object({
@@ -44,7 +45,7 @@ const formSchema = z.object({
     latestValuation: z.string().min(1, {
       message: "At least 1 characters.",
     }),
-    ebitda: z.string().min(4, {
+    ebitda: z.string().min(1, {
       message: "At least 1 characters.",
     }),
     projectedValuation: z.string().min(1, {
@@ -63,21 +64,39 @@ const formSchema = z.object({
 
 
 
+  
+
+  
 
 const Page = () => {
-  const [nameI, setName] = useState("");
-  const [companynameI, setCompanyname] = useState("");
-  const [worthI, setWorth] = useState("");
+  const {user} = useKindeBrowserClient(); 
+  const userEmail = user?.email;
+ 
 
-  const createInvestor = useMutation(api.investor.createInvestor);
 
-  const create = async () => {
-    await createInvestor({
-      name: nameI,
-      companyname: companynameI,
-      worth: parseFloat(worthI),
-    });
-  };
+  const [first, setFirst] = useState<string>("0"); 
+
+  useEffect(() => {
+    if (user?.email) {
+      setFirst(user.email); // Once email is available, set it in the state
+    }
+  }, []);
+
+  console.log(first)
+
+
+
+
+  
+  const createCompany = useMutation(api.company.createCompany);
+
+  
+
+
+  
+
+  
+
 
 
    // 1. Define your form.
@@ -97,47 +116,44 @@ const Page = () => {
       ebitda: "",
       projectedValuation: "",
       currentRevenue: "",
-      revenueIncreased: ""
+      revenueIncreased: "",
+     
 
       
     },
   })
  
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    
+    await createCompany({
+      email: userEmail ?? "", // Ensure email is always a string
+      companyname: form.getValues("companyName"),
+      description: form.getValues("description"),
+      website: form.getValues("website"),
+      companyEmail: form.getValues("companyEmail"),
+      grossMargin: form.getValues("grossMargin"),
+      netProfitMargin: form.getValues("netProfitMargin"),
+      operatingMargin: form.getValues("operatingMargin"),
+      freeCashFlow: form.getValues("freeCashFlow"),
+      burnRate: form.getValues("burnRate"),
+      latestValuation: form.getValues("latestValuation"),
+      ebitda: form.getValues("ebitda"),
+      projectedValuation: form.getValues("projectedValuation"),
+      currentRevenue: form.getValues("currentRevenue"),
+      revenueIncreased: form.getValues("revenueIncreased"),
+      companyVerified: "false", // Example value (set this based on your logic)
+    });
+
     console.log(values)
   }
 
   return (
     <div className="max-w-7xl ml-auto mr-auto">
     <div className='pl-7 pr-7 pt-7 flex flex-col justify-center items-center' >
-      <form className="hidden"
-        onSubmit={(e) => {
-          e.preventDefault();
-          create();
-        }}
-      >
-        <input
-          type="text"
-          placeholder="enter name"
-          onChange={(e) => setName(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="company name"
-          onChange={(e) => setCompanyname(e.target.value)}
-        />
-        <input
-          type="number"
-          placeholder="net worth"
-          onChange={(e) => setWorth(e.target.value)}
-        />
-        <button type="submit">Create Investor</button>
-      </form>
+      
 
-    
+  
 
       <div className='text-xl self-start font-bold mb-8 text-gray-900'>Register Your Company</div>
       
