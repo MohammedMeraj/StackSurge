@@ -4,6 +4,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Literata } from 'next/font/google';
 import { ConvexClientProvider } from "./ConvexClientProvider";
+import { Toaster } from "@/components/ui/sonner";
+
 
 
 
@@ -34,6 +36,7 @@ export default function RootLayout({
         <div className="bg-white">
           <ConvexClientProvider>
             {children}
+            <Toaster />
           </ConvexClientProvider>
           </div>
       

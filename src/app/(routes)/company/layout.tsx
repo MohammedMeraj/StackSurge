@@ -1,8 +1,11 @@
 
 import Companysidebar from "@/app/_components/Companysidebar";
 import Loggedheader from "@/app/_components/Loggedheader";
+
 import type { Metadata } from "next";
 import { Literata } from 'next/font/google';
+import { Toaster } from "sonner";
+
 
 
 
@@ -34,7 +37,9 @@ export default function RootLayout({
         <div className="col-span-9 h-screen overflow-y-scroll">
           <Loggedheader />
             {children} {/* Render the page content */}
+            <Toaster/>
         </div>
+        
       </div>
     </body>
   </html>
