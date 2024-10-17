@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
-import { useEffect, useState } from "react";
+
 import { api } from "../../../convex/_generated/api";
 
 
@@ -74,13 +74,6 @@ const Page = () => {
  
 
 
-  const [first, setFirst] = useState<string>("0"); 
-
-  useEffect(() => {
-    if (user?.email) {
-      setFirst(user.email); // Once email is available, set it in the state
-    }
-  }, []);
 
   
 
