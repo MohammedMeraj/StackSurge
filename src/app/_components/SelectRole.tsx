@@ -16,7 +16,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
+
 
 export function AlertDialogDemo() {
   return (

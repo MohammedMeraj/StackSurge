@@ -2,7 +2,7 @@
 import { Progress } from '@/components/ui/progress'
 import React, { useEffect, useState } from 'react'
 
-const loading = () => {
+const Loading = () => {
 
   const [progress, setProgress] = useState<number>(0)
  
@@ -64,4 +64,4 @@ const loading = () => {
   )
 }
 
-export default loading
+export default Loading

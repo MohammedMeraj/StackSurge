@@ -82,7 +82,7 @@ const Page = () => {
     }
   }, []);
 
-  console.log(first)
+  
 
 
 
