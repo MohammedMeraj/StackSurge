@@ -3,7 +3,7 @@ import Image from 'next/image'
 import React from 'react'
 import zomato from '../../../public/zomato.png'
 import { Button } from '@/components/ui/button'
-const CompanyCard = (props:any) => {
+const CompanyCard = (props) => {
      const values = props.getCompany;
 
     
@@ -11,7 +11,7 @@ const CompanyCard = (props:any) => {
     
     <div>
 <div className='text-xl   px-8 self-start font-bold mb-3 mt-4 text-gray-900'>Explore Start Up&apos;s</div>
-        {values?.map((value:any)=>{
+        {values?.map((value)=>{
 return <div key={value?.email} className='p-7 flex flex-col justify-center items-center'>
 
 <div className='w-full h-fit py-6 px-8  border border-gray-300 rounded-md'>
