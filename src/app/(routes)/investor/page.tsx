@@ -27,7 +27,7 @@ const Page = () => {
   return (
     <div className="w-full">
       {getCompany ? 
-      <CompanyCard getCompany={getCompany} className="mt-28" /> : <div><Loader/></div>
+      <CompanyCard getCompany={getCompany}  /> : <div><Loader/></div>
 }
     </div>
   );

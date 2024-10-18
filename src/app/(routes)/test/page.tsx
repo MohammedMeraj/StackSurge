@@ -1,32 +1,36 @@
-"use client"
-
+"use client";
 import CompanyCard from '@/app/_components/CompanyCard';
-import { api } from '../../../../convex/_generated/api'
-import { useQuery } from 'convex/react'
+import { useKindeBrowserClient } from '@kinde-oss/kinde-auth-nextjs';
+import { useQuery } from 'convex/react';
+import React, { useEffect } from 'react';
+import { toast } from 'sonner';
+import { api } from '../../../../convex/_generated/api';
+import Loader from '@/app/_components/Loader';
+ 
 
 const Page = () => {
 
+  const { user } = useKindeBrowserClient();
+  const email = user?.email;
 
-        const getAll = useQuery(api.user.getAlluser);
-        const getCompany = useQuery(api.company.getCompany);
-  
-    
+  useEffect(() => {
+    // Check if the login was successful and the toast hasn't been shown yet
+    if (email && !sessionStorage.getItem('toastShown')) {
+      toast('Logged in successfully');
+      sessionStorage.setItem('toastShown', 'true'); // Mark the toast as shown
+    }
+  }, [email]); // Trigger when email is available
+
+
+  const getCompany = useQuery(api.company.getCompany);
 
   return (
-    <div>
-      {getAll?.map((user)=>{
-        return <div key={user.email} className='w-screen mb-1 flex flex-row items-center justify-between p-5 text-xs'>
-         
-        {/*} <div className='w-[24vw] ml-3 '>{user?._id}</div> 
-         <div className='w-[24vw] ml-3'>{user?.email}</div> 
-         <div className='w-[24vw] ml-3 overflow-x-scroll'>{user?.image}</div> */}
-         <div className='  ml-3'>{user?.name}</div> 
-         
-        </div>
-      })}
-      <CompanyCard getAll={getCompany}/>
-    </div>
-  )
+    <div className="w-full">
+      {getCompany ? 
+      <CompanyCard getCompany={getCompany}  /> : <div><Loader/></div>
 }
+    </div>
+  );
+};
 
-export default Page
+export default Page;
