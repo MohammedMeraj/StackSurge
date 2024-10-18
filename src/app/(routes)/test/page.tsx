@@ -1,5 +1,6 @@
 "use client"
 
+import CompanyCard from '@/app/_components/CompanyCard';
 import { api } from '../../../../convex/_generated/api'
 import { useQuery } from 'convex/react'
 
@@ -7,6 +8,7 @@ const Page = () => {
 
 
         const getAll = useQuery(api.user.getAlluser);
+        const getCompany = useQuery(api.company.getCompany);
   
     
 
@@ -22,6 +24,7 @@ const Page = () => {
          
         </div>
       })}
+      <CompanyCard getAll={getCompany}/>
     </div>
   )
 }

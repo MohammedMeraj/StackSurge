@@ -14,7 +14,7 @@ const Loading = () => {
       const interval = setInterval(() => {
         setProgress((prevProgress) => {
        
-          if (prevProgress < 50) {
+          if (prevProgress < 79) {
             return prevProgress + 1;
           } else {
             clearInterval(interval);
@@ -35,13 +35,13 @@ const Loading = () => {
         setProgress((prevProgress) => {
         
           if (prevProgress < 100) {
-            return prevProgress + 30;
+            return prevProgress + 1;
           } else {
             clearInterval(interval); 
             return prevProgress; 
           }
         });
-      }, 1); 
+      }, 100); 
 
 
       return () => clearInterval(interval);
@@ -55,9 +55,9 @@ const Loading = () => {
 
 
   return (
-    <div className='w-screen h-screen flex items-center justify-center'>
+    <div className='h-[70vh] flex items-center justify-center '>
       
-      <Progress value={progress} className='h-2 w-[40%]'/>
+      <Progress value={progress} className='h-2 w-[40%] mx-auto my-auto'/>
      
       
       </div>
