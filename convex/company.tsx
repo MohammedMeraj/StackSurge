@@ -1,5 +1,5 @@
 
-import { convexToJson, v } from "convex/values";
+import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 
 
@@ -36,3 +36,13 @@ export const getCompany = query({
         return await ctx.db.query("company").collect(); 
     }
 })
+
+export const CompanyEmail = query({
+    args:{ 
+        email : v.string()
+    },
+    handler: async(ctx,args)=>{
+      return await ctx.db.query("company").filter((q)=>q.eq(q.field("email"),args.email)).take(1)
+    }
+})
+

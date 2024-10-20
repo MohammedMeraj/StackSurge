@@ -1,34 +1,49 @@
+//page to add in place of form where the 
 "use client";
-import CompanyCard from '@/app/_components/CompanyCard';
 import { useKindeBrowserClient } from '@kinde-oss/kinde-auth-nextjs';
-import { useQuery } from 'convex/react';
-import React, { useEffect } from 'react';
-import { toast } from 'sonner';
 import { api } from '../../../../convex/_generated/api';
-import Loader from '@/app/_components/Loader';
- 
+import { useQuery } from 'convex/react';
+import Cregister from '@/app/_components/Cregister'
+
+
+
+
 
 const Page = () => {
-
   const { user } = useKindeBrowserClient();
-  const email = user?.email;
+  const mi = user?.email;
+  const mt = "haowe"
 
-  useEffect(() => {
-    // Check if the login was successful and the toast hasn't been shown yet
-    if (email && !sessionStorage.getItem('toastShown')) {
-      toast('Logged in successfully');
-      sessionStorage.setItem('toastShown', 'true'); // Mark the toast as shown
-    }
-  }, [email]); // Trigger when email is available
+  
 
+  // Directly use useQuery here
+  const emailExists = useQuery(api.company.CompanyEmail, mi ? { email: mi } : 'skip');
 
-  const getCompany = useQuery(api.company.getCompany);
+  const eliz = emailExists ? emailExists[0] : null;
+
+  console.log(eliz?.companyname)
+  
+  
+  // Return loading if the query is still being processed
+  if (!emailExists) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <div className="w-full">
-      {getCompany ? 
-      <CompanyCard getCompany={getCompany}  /> : <div><Loader/></div>
-}
+    <div>
+      {emailExists.length > 0 ? (
+        <p>your company is already registered
+          <div>as <span className='font-bold text-lg'>{eliz.companyname}</span> </div>
+          
+        </p>
+      ) : (
+        <>
+        
+        <Cregister/>
+        </>
+        
+
+      )}
     </div>
   );
 };

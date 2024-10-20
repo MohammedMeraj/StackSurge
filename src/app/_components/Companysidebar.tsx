@@ -58,7 +58,7 @@ const Companysidebar = () => {
 
             <li>
               <a
-                href="#"
+                href="/company/investors"
                 className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
               >
                 <Handshake size={20} color="#8f8f8f" strokeWidth={1.75} />
@@ -67,7 +67,7 @@ const Companysidebar = () => {
                 <span
                   className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible"
                 >
-                  Investors
+                  Find Investors
                 </span>
               </a>
             </li>
@@ -172,10 +172,10 @@ const Companysidebar = () => {
 
         <li>
           <Link
-            href="/"
+            href="/company/investors"
             className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
           >
-            Investors
+            Find Investors
           </Link>
         </li>
 
