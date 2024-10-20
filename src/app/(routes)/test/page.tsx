@@ -12,7 +12,7 @@ import Cregister from '@/app/_components/Cregister'
 const Page = () => {
   const { user } = useKindeBrowserClient();
   const mi = user?.email;
-  const mt = "haowe"
+ 
 
   
 
