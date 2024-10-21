@@ -7,7 +7,6 @@ const Loading = () => {
 
   return (
     <div>
-        <div>LOADINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG</div>
       <Loader />
     </div>
   );
