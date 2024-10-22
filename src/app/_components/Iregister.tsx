@@ -96,7 +96,7 @@ const Page = () => {
     <div className="max-w-7xl ml-auto mr-auto mb-14  ">
       <div className="pl-7 pr-7 pt-7 flex flex-col justify-center items-center">
         <div className="text-xl self-start font-bold mb-8 text-gray-900">
-          Register Your Company
+          Setup Your Profile
         </div>
 
         <div className="w-[95%] ml-[15%] mr-[15%] border p-7 rounded-md">
