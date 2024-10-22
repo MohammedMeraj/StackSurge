@@ -90,8 +90,9 @@ const Page = () => {
       investmentSector: form.getValues("investmentSector"),
       investorVerified: "false",
     });
-    
+
       toast("Profile Addded Successfully");
+      console.log(values)
 
    
   }
