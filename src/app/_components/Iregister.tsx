@@ -25,6 +25,8 @@ import {
 import { useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+import { toast } from "sonner";
+
 
 const formSchema = z.object({
   investorName: z.string().min(3, {
@@ -88,8 +90,10 @@ const Page = () => {
       investmentSector: form.getValues("investmentSector"),
       investorVerified: "false",
     });
+    
+      toast("Profile Addded Successfully");
 
-    console.log(values);
+   
   }
 
   return (

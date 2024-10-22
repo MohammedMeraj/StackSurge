@@ -4,6 +4,7 @@ import Side from "@/app/_components/Side";
 
 import type { Metadata } from "next";
 import { Literata } from 'next/font/google';
+import { Toaster } from "sonner";
 
 
 
@@ -35,6 +36,7 @@ export default function RootLayout({
         <div className="col-span-9 h-screen overflow-y-scroll">
           <Loggedheader/>
             {children} {/* Render the page content */}
+            <Toaster/>
         </div>
       </div>
     </body>
