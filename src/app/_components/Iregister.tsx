@@ -1,17 +1,30 @@
 "use client";
-import { useMutation } from "convex/react";
-import {z} from 'zod';
+
+import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
-import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
-import {  Select,  SelectContent,  SelectItem,  SelectTrigger,  SelectValue} from "@/components/ui/select"
-
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
-
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 
 const formSchema = z.object({
   investorName: z.string().min(3, {
@@ -37,131 +50,92 @@ const formSchema = z.object({
   }),
   investmentSector: z.string().min(1, {
     message: "Enter a valid Sector",
-  })
-
-  
-})
-
-
-
-
-
-
-  
-
-  
+  }),
+});
 
 const Page = () => {
-  const {user} = useKindeBrowserClient(); 
+  const { user } = useKindeBrowserClient();
   const userEmail = user?.email;
- 
 
+  const createInvestor = useMutation(api.investor.createInvestor);
 
-
-  
-
-
-
-
-  
-  const createCompany = useMutation(api.company.createCompany);
-
-  
-
-
-  
-
-  
-
-
-
-   // 1. Define your form.
- const form = useForm<z.infer<typeof formSchema>>({
+  // 1. Define your form.
+  const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      
-
       investorName: "",
-      country: "",      
+      country: "",
       currentRole: "",
       industryExpertise: "",
       yearsExperience: "",
       geographicalFocus: "",
       proEmail: "",
       investmentSector: "",
-      
-     
-
-      
     },
-  })
- 
+  });
+
   //              2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    
-   // await createCompany({
-     // email: userEmail ?? "", // Ensure email is always a string
-   //   companyname: form.getValues("companyName"),
-    //  description: form.getValues("description"),
-    //  website: form.getValues("website"),
-    //  companyEmail: form.getValues("companyEmail"),
-     // grossMargin: form.getValues("grossMargin"),
-     // netProfitMargin: form.getValues("netProfitMargin"),
-    //  operatingMargin: form.getValues("operatingMargin"),
-    //  freeCashFlow: form.getValues("freeCashFlow"),
-    //  burnRate: form.getValues("burnRate"),
-    //  latestValuation: form.getValues("latestValuation"),
-    //  ebitda: form.getValues("ebitda"),
-    //  projectedValuation: form.getValues("projectedValuation"),
-    //  currentRevenue: form.getValues("currentRevenue"),
-    //  revenueIncreased: form.getValues("revenueIncreased"),
-   //   companyVerified: "false", // Example value (set this based on your logic)
-  //  });
+    await createInvestor({
+      email: userEmail ?? "",
+      investorName: form.getValues("investorName"),
+      country: form.getValues("country"),
+      currentRole: form.getValues("currentRole"),
+      industryExpertise: form.getValues("industryExpertise"),
+      yearsExperience: form.getValues("yearsExperience"),
+      geographicalFocus: form.getValues("geographicalFocus"),
+      proEmail: form.getValues("proEmail"),
+      investmentSector: form.getValues("investmentSector"),
+      investorVerified: "false",
+    });
 
-  //  console.log(values)
-}
+    console.log(values);
+  }
 
   return (
     <div className="max-w-7xl ml-auto mr-auto mb-14  ">
-    <div className='pl-7 pr-7 pt-7 flex flex-col justify-center items-center' >
-      
+      <div className="pl-7 pr-7 pt-7 flex flex-col justify-center items-center">
+        <div className="text-xl self-start font-bold mb-8 text-gray-900">
+          Register Your Company
+        </div>
 
-  
+        <div className="w-[95%] ml-[15%] mr-[15%] border p-7 rounded-md">
+          <div className="text-xl mb-7">Basic Details</div>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              <FormField
+                control={form.control}
+                name="investorName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Full Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter your name" {...field} />
+                    </FormControl>
+                    <FormDescription>
+                      This is your public display name.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-      <div className='text-xl self-start font-bold mb-8 text-gray-900'>Register Your Company</div>
-      
-      <div className="w-[95%] ml-[15%] mr-[15%] border p-7 rounded-md">
-      <div className="text-xl mb-7">Basic Details</div>
-      <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-      <FormField
-          control={form.control}
-          name="investorName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Full Name</FormLabel>
-              <FormControl>
-                <Input placeholder="Enter your name" {...field} />
-              </FormControl>
-              <FormDescription>This is your public display name.</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-         <FormField
-          control={form.control}
-          name="country"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Select Country</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select Country" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
+              <FormField
+                control={form.control}
+                name="country"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Select Country</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select Country" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
                         <SelectItem value="Argentina">Argentina</SelectItem>
                         <SelectItem value="Australia">Australia</SelectItem>
                         <SelectItem value="Austria">Austria</SelectItem>
@@ -195,143 +169,147 @@ const Page = () => {
                         <SelectItem value="Poland">Poland</SelectItem>
                         <SelectItem value="Portugal">Portugal</SelectItem>
                         <SelectItem value="Russia">Russia</SelectItem>
-                        <SelectItem value="Saudi Arabia">Saudi Arabia</SelectItem>
-                        <SelectItem value="South Africa">South Africa</SelectItem>
+                        <SelectItem value="Saudi Arabia">
+                          Saudi Arabia
+                        </SelectItem>
+                        <SelectItem value="South Africa">
+                          South Africa
+                        </SelectItem>
                         <SelectItem value="South Korea">South Korea</SelectItem>
                         <SelectItem value="Spain">Spain</SelectItem>
                         <SelectItem value="Sweden">Sweden</SelectItem>
                         <SelectItem value="Switzerland">Switzerland</SelectItem>
-                        <SelectItem value="United Kingdom">United Kingdom</SelectItem>
-                        <SelectItem value="United States">United States</SelectItem>
+                        <SelectItem value="United Kingdom">
+                          United Kingdom
+                        </SelectItem>
+                        <SelectItem value="United States">
+                          United States
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="proEmail"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Professsional Email</FormLabel>
+                    <FormControl>
+                      <Input placeholder="e.g., MyName@email.com" {...field} />
+                    </FormControl>
 
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="proEmail"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Professsional Email</FormLabel>
-              <FormControl>
-                <Input placeholder="e.g., MyName@email.com" {...field} />
-              </FormControl>
-             
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-         
-        
-        <Separator/>
-        
-           {/*Profit Margin  &#40; Overall &#41; */}
-        <div className="text-xl">Professional Information</div>
-        <FormField
-          control={form.control}
-          name="currentRole"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Current Role/Position</FormLabel>
-              <FormControl>
-                <Input placeholder="e.g., Angel Investor, Venture Capitalist..." {...field} />
-              </FormControl>
-             
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-         <FormField
-          control={form.control}
-          name="industryExpertise"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Industry Expertise</FormLabel>
-              <FormControl>
-                <Input placeholder="e.g., Tech, Healthcare, Finance..." {...field} />
-              </FormControl>
-             
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+              <Separator />
 
-      <FormField
-          control={form.control}
-          name="yearsExperience"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Years of Experience</FormLabel>
-              <FormControl>
-                <Input type="number" placeholder="Enter Value" {...field} />
-              </FormControl>
-             
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        
-            
+              {/*Profit Margin  &#40; Overall &#41; */}
+              <div className="text-xl">Professional Information</div>
+              <FormField
+                control={form.control}
+                name="currentRole"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Current Role/Position</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="e.g., Angel Investor, Venture Capitalist..."
+                        {...field}
+                      />
+                    </FormControl>
 
-              <Separator/>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="industryExpertise"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Industry Expertise</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="e.g., Tech, Healthcare, Finance..."
+                        {...field}
+                      />
+                    </FormControl>
 
-
-            {/*Cash Flow  &#40; Overall &#41; */}
-              <div className="text-xl">Invetment Preferences</div>
-          
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
               <FormField
-          control={form.control}
-          name="investmentSector"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Investment Sector</FormLabel>
-              <FormControl>
-                <Input placeholder="e.g., Automotive, Fashion, Electronics..." {...field} />
-              </FormControl>
-             
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-         <FormField
-          control={form.control}
-          name="geographicalFocus"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Geographical Focus</FormLabel>
-              <FormControl>
-                <Input placeholder="Enter Location" {...field} />
-              </FormControl>
-             
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-              
-            
+                control={form.control}
+                name="yearsExperience"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Years of Experience</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        placeholder="Enter Value"
+                        {...field}
+                      />
+                    </FormControl>
 
-            
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-              <Separator/>
+              <Separator />
 
+              {/*Cash Flow  &#40; Overall &#41; */}
+              <div className="text-xl">Invetment Preferences</div>
 
+              <FormField
+                control={form.control}
+                name="investmentSector"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Investment Sector</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="e.g., Automotive, Fashion, Electronics..."
+                        {...field}
+                      />
+                    </FormControl>
 
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="geographicalFocus"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Geographical Focus</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter Location" {...field} />
+                    </FormControl>
 
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
+              <Separator />
 
-              
-            
-        
-        <Button type="submit" className="w-full">Submit</Button>
-      </form>
-    </Form>
-   </div>
-    </div>
+              <Button type="submit" className="w-full">
+                Submit
+              </Button>
+            </form>
+          </Form>
+        </div>
+      </div>
     </div>
   );
 };
