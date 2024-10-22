@@ -28,7 +28,7 @@ export default function RootLayout({
    
     <html lang="en">
     <body className={literata.className}>
-      <div className="grid grid-cols-12 min-h-screen bg-white">
+      <div className="grid grid-cols-12 max-h-screen bg-white">
         <div className="col-span-3">
           <Side />
         </div>
