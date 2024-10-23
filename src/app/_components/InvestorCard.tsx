@@ -20,7 +20,7 @@ const InvestorCard = () => {
   const data: Company[] | undefined = useQuery(api.company.getCompany);
 
   if (data && data.length > 0) {
-    console.log(data[5].companyname); // Access the companyname from the first company
+    console.log(data[0].companyname); // Access the companyname from the first company
   }
 
   // State to manage visibility and icon rotation
