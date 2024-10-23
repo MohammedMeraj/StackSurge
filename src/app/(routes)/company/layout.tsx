@@ -17,8 +17,8 @@ const literata = Literata({
 });
 
 export const metadata: Metadata = {
-  title: "Dashboard",
-  description: "Dashboard : Investor",
+  title: "Company",
+  description: "Dashboard : Company",
 };
 
 export default function RootLayout({

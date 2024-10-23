@@ -18,6 +18,7 @@ import { Separator } from "@/components/ui/separator";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 
 import { api } from "../../../convex/_generated/api";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   companyName: z.string().min(3, {
@@ -113,7 +114,7 @@ const Page = () => {
       revenueIncreased: form.getValues("revenueIncreased"),
       companyVerified: "false", // Example value (set this based on your logic)
     });
-
+    toast("Company Registered.You need to verify the company before raising funds.");
     console.log(values);
   }
 
