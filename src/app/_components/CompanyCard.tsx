@@ -1,8 +1,7 @@
 "use client"
-import Image from 'next/image'
 import React from 'react'
-import zomato from '../../../public/zomato.png'
 import { Button } from '@/components/ui/button'
+import { Skeleton } from '@/components/ui/skeleton'
 
 // Define the shape of the props
 interface Company {
@@ -36,7 +35,7 @@ const CompanyCard: React.FC<CompanyCardProps> = (props) => {
           <div className='w-full h-fit py-6 px-8 border border-gray-300 rounded-md'>
             <div className='flex flex-row m-w-[60vw] items-center justify-between'>
               <div className='flex flex-row gap-3 items-center justify-center'>
-                <Image width={45} height={45} src={zomato || ""} alt='company-logo' className='rounded-md overflow-hidden border border-gray-300'/>
+                <Skeleton className='w-16 h-16 rounded-md  '/>
                 <div className='text-3xl font-bold text-gray-800 italic'>{value?.companyname}</div>
               </div>
               <div className='flex flex-row items-center justify-center gap-8'>

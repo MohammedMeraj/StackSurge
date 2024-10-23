@@ -89,8 +89,8 @@ const Companysidebar = () => {
             </li>
 
             <li>
-              <a
-                href="#"
+              <Link
+                href="/company/profile"
                 className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
               >
                 <CircleUser size={20} color="#8f8f8f" strokeWidth={1.75} />
@@ -100,7 +100,7 @@ const Companysidebar = () => {
                 >
                   Profile
                 </span>
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -187,22 +187,16 @@ const Companysidebar = () => {
             Your Company
           </Link>
         </li>
-
         <li>
-          <details className="group [&_summary::-webkit-details-marker]:hidden">
-            <summary
-              className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-            >
-              <span className="text-sm font-medium"> Profile </span>
-
-              <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                
-              </span>
-            </summary>
-
-            
-          </details>
+          <Link
+            href="/company/profile"
+            className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+          >
+            Profile
+          </Link>
         </li>
+
+       
       </ul>
     </div>
   </div>
