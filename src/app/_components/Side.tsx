@@ -142,7 +142,7 @@ const Side = () => {
 
   <div className="flex h-screen flex-1 flex-col justify-between border-e bg-white">
     <div className="px-4 py-6">
-    <Image src="/logo.svg" alt="logo" width={200} height={200} style={{ width: 'auto', height: 'auto', maxWidth: '100%' }}  />
+    <Image src="/logo.svg" alt="logo" width={200} height={200} style={{ width: 'auto', height: 'auto', maxWidth: '190px' }}  />
       <ul className="mt-6 space-y-1">
         <li>
           <Link
