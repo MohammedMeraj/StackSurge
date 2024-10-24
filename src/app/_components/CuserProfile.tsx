@@ -16,7 +16,9 @@ const CuserProfile = () => {
   return (
     <div className='w-[100%]  border rounded-md flex flex-col items-center justify-center'>
 
-        { picture ? <><Avatar className='w-24 h-24 mx-auto mt-10 '>
+        { picture ? <>
+        
+        <Avatar className='w-24 h-24 mx-auto mt-10 '>
         <AvatarImage src={picture} />
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
@@ -34,7 +36,8 @@ const CuserProfile = () => {
                         <div>Public Email :</div>
                         <div>{email}</div>
                 </div>
-                </div></> : <>
+                </div>
+                </> : <>
                 
                 <Skeleton className='w-24 h-24 rounded-full mx-auto mt-10 ' />
                 <Separator className='mt-10'/>
