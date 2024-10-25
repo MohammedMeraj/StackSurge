@@ -23,7 +23,7 @@ const Page = () => {
 <>
 <div className='text-xl px-8 self-start font-bold mb-3 mt-4 text-gray-900'>Find Investors</div>
 { inv?.map((inv)=>(
-  <div>
+  <div key={inv?.email}>
   
   <InvestorCard investorName={inv?.investorName} currentRole={inv?.currentRole} investmentSector={inv?.investmentSector} picture={"pictureLink"} geographicalFocus={inv?.geographicalFocus}/>
 </div>
