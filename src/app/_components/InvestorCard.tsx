@@ -3,25 +3,25 @@
 import React, { useState } from "react";
 import { ChevronDown, CircleDollarSign, MapPin } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
-import { useQuery } from "convex/react";
-import { api } from "../../../convex/_generated/api";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 
-interface Company {
-  companyname: string;
-  // other fields if needed
+
+interface InvestorCrd {
+
+  investorName: string;
+  currentRole: string;
+  investmentSector: string;
+  picture: string;
+  geographicalFocus: string;
+
 }
 
-const InvestorCard = () => {
-  const { user } = useKindeBrowserClient();
-  const picture = user?.picture || "";
+const InvestorCard: React.FC<InvestorCrd> = (props) => {
+  
+ 
 
-  const data: Company[] | undefined = useQuery(api.company.getCompany);
 
-  if (data && data.length > 0) {
-    console.log(data[0].companyname); // Access the companyname from the first company
-  }
 
   // State to manage visibility and icon rotation
   const [isVisible, setIsVisible] = useState(false);
@@ -30,15 +30,17 @@ const InvestorCard = () => {
     setIsVisible(!isVisible);
   };
 
+ 
+
   return (
-    <div className="w-fit max-w-7xl bg-white mt-7 h-fit p-5 rounded-md border text-gray-800 mx-auto flex flex-row justify-center items-start">
+    <div className="w-fit max-w-4xl min-w-xl bg-white mt-7 h-fit p-5 rounded-md border text-gray-800 mx-auto flex flex-row justify-center items-start">
       <Avatar>
-        <AvatarImage src={picture} />
+        <AvatarImage src={props.picture} />
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
       <div className="flex text-base flex-col items-start justify-center ml-3 min-w-96">
-        <div className="text-gray-900">Ashneer Grover</div>
-        <div className="text-gray-700 text-sm">Scientist, Harvard University</div>
+        <div className="text-gray-900">{props.investorName}</div>
+        <div className="text-gray-700 text-sm">{props.currentRole}</div>
 
         {/* Smooth transition for collapsing and expanding */}
         <div
@@ -50,13 +52,14 @@ const InvestorCard = () => {
             <div className="flex flex-row items-center gap-3">
               <CircleDollarSign size={15} color="#8f8f8f" strokeWidth={1.75} />
               <div className="text-gray-700 text-sm">
-                Investment Interest: Entertainment
+                Investment Interest: {props.investmentSector}
               </div>
             </div>
+            <Separator className="mt-2 mb-2"/>
             <div className="flex flex-row items-center gap-3">
               <MapPin size={15} color="#8f8f8f" strokeWidth={1.75} />
               <div className="text-gray-700 text-sm">
-                Geographical Interest: Asia, America
+                Geographical Interest: {props.geographicalFocus}
               </div>
             </div>
           </div>
@@ -67,7 +70,7 @@ const InvestorCard = () => {
       {/* Rotate the ChevronDown icon smoothly */}
       <ChevronDown
         onClick={handleToggle}
-        className={`p-2 ml-8 rounded-full overflow-hidden hover:bg-gray-50 transition-transform duration-300 ease-in-out ${
+        className={`p-2 ml-8 rounded-full w-10 h-10  overflow-hidden hover:bg-gray-50 transition-transform duration-300 ease-in-out ${
           isVisible ? "rotate-180" : ""
         }`}
         size={40}
