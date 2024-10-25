@@ -16,7 +16,12 @@ const Page = () => {
   useEffect(() => {
     // Check if the login was successful and the toast hasn't been shown yet
     if (email && !sessionStorage.getItem('toastShown')) {
-      toast('Logged in successfully');
+      toast("Logged in Successfully", {
+        description: "You are now logged in as a Company",
+        action: {
+          label: "Ok",
+          onClick: () => console.log("Login in Success"),
+        }});
       sessionStorage.setItem('toastShown', 'true'); // Mark the toast as shown
     }
   }, [email]); // Trigger when email is available

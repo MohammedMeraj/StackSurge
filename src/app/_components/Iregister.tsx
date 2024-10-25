@@ -91,7 +91,13 @@ const Page = () => {
       investorVerified: "false",
     });
 
-      toast("Profile Addded Successfully");
+      
+      toast("Profile Added Successfully", {
+        description: "You need to verify your profile before Investing",
+        action: {
+          label: "Ok",
+          onClick: () => console.log("Profile"),
+        }});
       console.log(values)
 
    

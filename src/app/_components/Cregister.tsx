@@ -114,7 +114,13 @@ const Page = () => {
       revenueIncreased: form.getValues("revenueIncreased"),
       companyVerified: "false", // Example value (set this based on your logic)
     });
-    toast("Company Registered.You need to verify the company before raising funds.");
+    
+    toast("Company Registered Successfully", {
+      description: "You need to verify the company before raising funds.",
+      action: {
+        label: "Ok",
+        onClick: () => console.log("Company Registered"),
+      }});
     console.log(values);
   }
 
