@@ -7,6 +7,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 interface Company {
   email: string;
   companyname: string;
+  companyServices: string;
   website: string;
   currentRevenue: number;
   revenueIncreased: number;
@@ -36,7 +37,11 @@ const CompanyCard: React.FC<CompanyCardProps> = (props) => {
             <div className='flex flex-row m-w-[60vw] items-center justify-between'>
               <div className='flex flex-row gap-3 items-center justify-center'>
                 <Skeleton className='w-16 h-16 rounded-md  '/>
-                <div className='text-3xl font-bold text-gray-800 italic'>{value?.companyname}</div>
+                <div>
+                <div className='text-3xl font-bold text-gray-800 '>{value?.companyname}</div>
+                <div className='text-sm text-gray-800'>{value?.companyServices}</div>
+                </div>
+                
               </div>
               <div className='flex flex-row items-center justify-center gap-8'>
                 <a href={value?.website} target='_blank' className='text-gray-800 hover:text-gray-500'>Visit Website</a>

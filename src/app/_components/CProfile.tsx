@@ -43,7 +43,8 @@ const Page = () => {
                   <div className="text-3xl font-bold text-gray-800">
                     {eliz?.companyname}
                   </div>
-                  <div>Transportation services</div>
+                  <div className="text-base">{eliz?.companyServices}</div>
+                  <div className="text-sm">{eliz?.businessType}</div>
                 </div>
               </div>
               <div className="w-fit flex gap-8">

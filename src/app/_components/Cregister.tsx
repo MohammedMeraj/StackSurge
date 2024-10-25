@@ -19,10 +19,17 @@ import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 
 import { api } from "../../../convex/_generated/api";
 import { toast } from "sonner";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const formSchema = z.object({
   companyName: z.string().min(3, {
     message: "Company Name must be at least 3 characters.",
+  }),
+  businessType: z.string().min(4, {
+    message: "Please Select an Option",
+  }),
+  companyServices: z.string().min(3, {
+    message: "At least 3 characters.",
   }),
   description: z.string().min(50, {
     message: "Company Description must be at least 50 characters.",
@@ -78,6 +85,8 @@ const Page = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       companyName: "",
+      businessType: "",
+      companyServices: "",
       description: "",
       website: "",
       companyEmail: "",
@@ -99,6 +108,8 @@ const Page = () => {
     await createCompany({
       email: userEmail ?? "", // Ensure email is always a string
       companyname: form.getValues("companyName"),
+      businessType: form.getValues("businessType"),
+      companyServices: form.getValues("companyServices"),
       description: form.getValues("description"),
       website: form.getValues("website"),
       companyEmail: form.getValues("companyEmail"),
@@ -145,6 +156,45 @@ const Page = () => {
                       <Input placeholder="example : StackSurge" {...field} />
                     </FormControl>
                     <FormDescription>Specify your company name</FormDescription>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="businessType"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Select Business Type</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select Type" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="Start Up">Start Up</SelectItem>
+                        <SelectItem value="Company">Company</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="companyServices"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Products and Services</FormLabel>
+                    <FormControl>
+                      <Input placeholder="example : E-commerce, Education..." {...field} />
+                    </FormControl>
+                    <FormDescription>Service/Products you provide</FormDescription>
 
                     <FormMessage />
                   </FormItem>

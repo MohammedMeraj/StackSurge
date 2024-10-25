@@ -7,6 +7,8 @@ export const createCompany= mutation({
     args:{
         email:v.string(),
         companyname:v.string(),
+        businessType: v.string(),
+        companyServices:v.string(),
         description:v.string(),
         website:v.string(),
         companyEmail:v.string(),
