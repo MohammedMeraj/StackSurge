@@ -15,7 +15,7 @@ function Header() {
             
             <Link className="block text-teal-600" href="/">
               <span className="sr-only">Home</span>
-              <Image src="/logo.svg" alt="logo" width={200} height={200} />
+              <Image src="/logo.svg" alt="logo" width={200} height={200} style={{ width: 'auto', height: 'auto', maxWidth: '190px' }} />
             </Link>
           </div>
 
