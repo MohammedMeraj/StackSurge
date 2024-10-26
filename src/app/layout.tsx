@@ -5,6 +5,7 @@ import "./globals.css";
 import { Literata } from 'next/font/google';
 import { ConvexClientProvider } from "./ConvexClientProvider";
 import { Toaster } from "@/components/ui/sonner";
+import "@uploadthing/react/styles.css";
 
 
 

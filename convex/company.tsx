@@ -12,6 +12,7 @@ export const createCompany= mutation({
         description:v.string(),
         website:v.string(),
         companyEmail:v.string(),
+        companyLogo:v.string(),
         grossMargin:v.string(),
         netProfitMargin:v.string(),
         operatingMargin:v.string(),

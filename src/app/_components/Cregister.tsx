@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { UploadButton } from "@/utils/uploadthing";
 import {
   Form,
   FormControl,
@@ -20,6 +21,8 @@ import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { api } from "../../../convex/_generated/api";
 import { toast } from "sonner";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import Image from "next/image";
+import { useState } from "react";
 
 const formSchema = z.object({
   companyName: z.string().min(3, {
@@ -79,6 +82,7 @@ const Page = () => {
   const userEmail = user?.email;
 
   const createCompany = useMutation(api.company.createCompany);
+  const [companyImage, setCompanyimage] = useState<string>("")
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -105,34 +109,47 @@ const Page = () => {
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    await createCompany({
-      email: userEmail ?? "", // Ensure email is always a string
-      companyname: form.getValues("companyName"),
-      businessType: form.getValues("businessType"),
-      companyServices: form.getValues("companyServices"),
-      description: form.getValues("description"),
-      website: form.getValues("website"),
-      companyEmail: form.getValues("companyEmail"),
-      grossMargin: form.getValues("grossMargin"),
-      netProfitMargin: form.getValues("netProfitMargin"),
-      operatingMargin: form.getValues("operatingMargin"),
-      freeCashFlow: form.getValues("freeCashFlow"),
-      burnRate: form.getValues("burnRate"),
-      latestValuation: form.getValues("latestValuation"),
-      ebitda: form.getValues("ebitda"),
-      projectedValuation: form.getValues("projectedValuation"),
-      currentRevenue: form.getValues("currentRevenue"),
-      revenueIncreased: form.getValues("revenueIncreased"),
-      companyVerified: "false", // Example value (set this based on your logic)
-    });
+    if(!companyImage){
+      toast("Please Upload Logo", {
+        description: "Company logo is required, Pleade upload the image.",
+        action: {
+          label: "Ok",
+          onClick: () => console.log("Company Registered"),
+        }});
+
+      
+    }else{
+      await createCompany({
+        email: userEmail ?? "", // Ensure email is always a string
+        companyname: form.getValues("companyName"),
+        businessType: form.getValues("businessType"),
+        companyServices: form.getValues("companyServices"),
+        description: form.getValues("description"),
+        website: form.getValues("website"),
+        companyEmail: form.getValues("companyEmail"),
+        companyLogo: companyImage ?? "",
+        grossMargin: form.getValues("grossMargin"),
+        netProfitMargin: form.getValues("netProfitMargin"),
+        operatingMargin: form.getValues("operatingMargin"),
+        freeCashFlow: form.getValues("freeCashFlow"),
+        burnRate: form.getValues("burnRate"),
+        latestValuation: form.getValues("latestValuation"),
+        ebitda: form.getValues("ebitda"),
+        projectedValuation: form.getValues("projectedValuation"),
+        currentRevenue: form.getValues("currentRevenue"),
+        revenueIncreased: form.getValues("revenueIncreased"),
+        companyVerified: "false", // Example value (set this based on your logic)
+      });
+      
+      toast("Company Registered Successfully", {
+        description: "You need to verify the company before raising funds.",
+        action: {
+          label: "Ok",
+          onClick: () => console.log("Company Registered"),
+        }});
+      console.log(values);
+    }
     
-    toast("Company Registered Successfully", {
-      description: "You need to verify the company before raising funds.",
-      action: {
-        label: "Ok",
-        onClick: () => console.log("Company Registered"),
-      }});
-    console.log(values);
   }
 
   return (
@@ -261,6 +278,55 @@ const Page = () => {
                   </FormItem>
                 )}
               />
+              
+          <div className="w-full">
+          <div className="text-sm mb-2 ">Company Logo</div>
+            <div className=" flex items-start justify-between mx-auto rounded-md py-2 px-4 border">
+          
+                <UploadButton
+
+                appearance={{
+                      
+                  button:{
+                    background: "black",
+                    fontSize: "small",
+                    height:"fit"
+                  
+                      }
+                }
+                  
+                }
+                  endpoint="imageUploader"
+                
+                  onClientUploadComplete={(res) => {
+                    // Do something with the response
+                    console.log("Files: ", res[0].url);
+                    const cImage = res[0].url;
+                    setCompanyimage(cImage);
+                    
+                  }}
+                  onUploadError={(error: Error) => {
+                    // Do something with the error.
+                    alert(`ERROR! ${error.message}`);
+                  }}
+                />
+                <div className="w-fit">
+                <div className="text-sm mt-1">Upload your Company Logo </div>
+                <div className="text-xs text-center">&#91; Preferred image ratio is 1:1  &#93;</div>
+                </div>
+
+                </div>
+              {companyImage && 
+              <>
+              <div className="flex gap-5 mt-3">
+              <div className="text-sm">Logo Preview :</div>
+              <Image src={companyImage} width={100} height={100} className="w-fit h-fit overflow-hidden rounded-md" alt="Company Logo" />
+              </div>
+              </>}
+                
+
+                
+              </div>
 
               <Separator />
 

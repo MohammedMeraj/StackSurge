@@ -7,6 +7,7 @@ import Loader from "@/app/_components/Loader"
 import { Separator } from "@/components/ui/separator";
 import { api } from "../../../convex/_generated/api";
 import { Skeleton } from "@/components/ui/skeleton";
+import Image from "next/image";
 
 
 const Page = () => {
@@ -35,10 +36,13 @@ const Page = () => {
           <div className="border rounded-md overflow-hidden h-fit max-w-6xl mx-auto mb-20 flex flex-col  ">
             <div className="flex items-center justify-between border-b py-7 pl-[5%] pr-[5%] mb-10">
               <div className="w-fit flex items-center justify-center gap-5">
-                <Skeleton
-                 
-                  className=" rounded-md w-20 h-20"
-                />
+                
+               <Image alt="" src={eliz?.companyLogo} width={100} height={100} className=" rounded-md w-20 h-20" />
+                
+                
+                
+
+
                 <div>
                   <div className="text-3xl font-bold text-gray-800">
                     {eliz?.companyname}

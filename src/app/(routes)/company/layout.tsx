@@ -36,6 +36,7 @@ export default function RootLayout({
         </div>
         <div className="col-span-9 h-screen overflow-y-scroll">
           <Loggedheader />
+          
             {children} {/* Render the page content */}
             <Toaster/>
         </div>
