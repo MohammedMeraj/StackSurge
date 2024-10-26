@@ -6,6 +6,7 @@ import Cregister from "@/app/_components/Cregister";
 import Loader from "@/app/_components/Loader"
 import { Separator } from "@/components/ui/separator";
 import { api } from "../../../convex/_generated/api";
+import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 
 
