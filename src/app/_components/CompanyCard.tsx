@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import { Button } from '@/components/ui/button'
-import { Skeleton } from '@/components/ui/skeleton'
+import Image from 'next/image';
 
 // Define the shape of the props
 interface Company {
@@ -9,6 +9,7 @@ interface Company {
   companyname: string;
   companyServices: string;
   website: string;
+  companyLogo: string;
   currentRevenue: number;
   revenueIncreased: number;
   grossMargin: number;
@@ -27,7 +28,7 @@ interface CompanyCardProps {
 
 const CompanyCard: React.FC<CompanyCardProps> = (props) => {
   const values = props.getCompany;
-
+  
   return (
     <div>
       <div className='text-xl px-8 self-start font-bold mb-3 mt-4 text-gray-900'>Explore Start Up&apos;s</div>
@@ -36,7 +37,7 @@ const CompanyCard: React.FC<CompanyCardProps> = (props) => {
           <div className='w-full h-fit py-6 px-8 border border-gray-300 rounded-md'>
             <div className='flex flex-row m-w-[60vw] items-center justify-between'>
               <div className='flex flex-row gap-3 items-center justify-center'>
-                <Skeleton className='w-16 h-16 rounded-md  '/>
+                <Image src={value?.companyLogo || ""} className='w-16 h-16 rounded-md' width={100} height={100} alt="hello"/>
                 <div>
                 <div className='text-3xl font-bold text-gray-800 '>{value?.companyname}</div>
                 <div className='text-sm text-gray-800'>{value?.companyServices}</div>
