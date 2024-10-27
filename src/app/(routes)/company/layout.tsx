@@ -31,10 +31,10 @@ export default function RootLayout({
     <html lang="en">
     <body className={literata.className}>
       <div className="grid grid-cols-12 min-h-screen bg-white">
-        <div className="col-span-3">
+        <div className="col-span-3 overflow-x-scroll ">
           <Companysidebar/>
         </div>
-        <div className="col-span-9 h-screen overflow-y-scroll">
+        <div className="col-span-9 h-screen overflow-y-scroll scrollbar-hide border-l">
           <Loggedheader />
           
             {children} {/* Render the page content */}
