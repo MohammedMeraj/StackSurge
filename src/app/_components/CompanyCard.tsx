@@ -31,7 +31,7 @@ const CompanyCard: React.FC<CompanyCardProps> = (props) => {
   
   return (
     <div>
-      <div className='text-xl px-8 self-start font-bold mb-3 mt-4 text-gray-900'>Explore Start Up&apos;s</div>
+      
       {values?.map((value) => (
         <div key={value?.email} className='p-7 flex flex-col justify-center items-center'>
           <div className='w-full h-fit py-6 px-8 border border-gray-300 rounded-md'>

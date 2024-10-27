@@ -49,3 +49,15 @@ export const CompanyEmail = query({
     }
 })
 
+export const getBusinessTypeCompany = query({
+    handler: async (ctx) => {
+        return await ctx.db.query("company").filter((q) => q.eq(q.field("businessType"), "Company")).collect();
+    }
+})
+
+
+export const getBusinessTypeStartup = query({
+    handler: async (ctx) => {
+        return await ctx.db.query("company").filter((q) => q.eq(q.field("businessType"), "Startup")).collect();
+    }
+})

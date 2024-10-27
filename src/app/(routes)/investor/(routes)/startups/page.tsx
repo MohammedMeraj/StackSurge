@@ -1,11 +1,25 @@
+"use client"
 import CompanyCard from '@/app/_components/CompanyCard'
+import { useQuery } from 'convex/react'
 import React from 'react'
+import { api } from '../../../../../../convex/_generated/api'
+import Loader from '@/app/_components/Loader'
+import Notfound from '@/app/_components/Notfound'
+
+
 
 const Page = () => {
-  
+
+  const getCompany = useQuery(api.company.getBusinessTypeStartup) ;
+  console.log(getCompany)
   return (
     <div>
-      <CompanyCard  getCompany={} />
+      <div className='text-xl px-8 self-start font-bold mb-3 mt-4 text-gray-900'>Explore Start Up&apos;s</div>
+      { getCompany ? <CompanyCard  getCompany={getCompany} />  :  <Loader/> }
+      <div>
+        {getCompany != null && getCompany.length <=0 && <><Notfound/></>}
+      </div>
+      
     </div>
   )
 }
