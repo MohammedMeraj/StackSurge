@@ -26,7 +26,7 @@ const Test = () => {
  
   
   
-  const chartData = [
+  const chartData = React.useMemo(() => [
     { date: "2024-04-01", desktop: 222, mobile: 150 },
     { date: "2024-04-02", desktop: 97, mobile: 180 },
     { date: "2024-04-03", desktop: 167, mobile: 120 },
@@ -70,9 +70,7 @@ const Test = () => {
     { date: "2024-05-11", desktop: 335, mobile: 270 },
     { date: "2024-05-12", desktop: 197, mobile: 240 },
     { date: "2024-05-13", desktop: 197, mobile: 160 },
-   
-    
-  ]
+    ], [])
 
   const total = React.useMemo(() => ({
     desktop: chartData.reduce((acc, curr) => acc + curr.desktop, 0),

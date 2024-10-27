@@ -1,8 +1,12 @@
+import CompanyCard from '@/app/_components/CompanyCard'
 import React from 'react'
 
 const Page = () => {
+  
   return (
-    <div>Start Ups</div>
+    <div>
+      <CompanyCard  getCompany={} />
+    </div>
   )
 }
 
