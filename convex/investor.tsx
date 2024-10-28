@@ -6,6 +6,7 @@ export const createInvestor = mutation({
     email: v.string(),
     investorName: v.string(),
     country: v.string(),
+    invetorImage: v.string(),
     currentRole: v.string(),
     industryExpertise: v.string(),
     yearsExperience: v.string(),
@@ -34,3 +35,11 @@ export const getCurrentInverstor = query({
   }
 })
 
+export const getPictureCurrentUser = query({
+  args:{
+    email : v.string()
+  },
+  handler: async(ctx,args)=>{
+     return await ctx.db.query("user").filter((q)=>q.eq(q.field("email"),args.email)).take(1)
+  }
+})

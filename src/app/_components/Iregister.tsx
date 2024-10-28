@@ -22,7 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useMutation } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { toast } from "sonner";
@@ -57,7 +57,10 @@ const formSchema = z.object({
 
 const Page = () => {
   const { user } = useKindeBrowserClient();
-  const userEmail = user?.email;
+  const userEmail = user?.email || "";
+
+  const currentUser = useQuery(api.investor.getPictureCurrentUser , {email: userEmail})
+  const pict = currentUser ? currentUser[0]?.image : null;
 
   const createInvestor = useMutation(api.investor.createInvestor);
 
@@ -82,6 +85,7 @@ const Page = () => {
       email: userEmail ?? "",
       investorName: form.getValues("investorName"),
       country: form.getValues("country"),
+      invetorImage: pict ?? "",
       currentRole: form.getValues("currentRole"),
       industryExpertise: form.getValues("industryExpertise"),
       yearsExperience: form.getValues("yearsExperience"),

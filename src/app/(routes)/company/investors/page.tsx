@@ -10,6 +10,7 @@ import Loader from "@/app/_components/Loader"
 
 const Page = () => {
   const inv = useQuery(api.investor.getAllInvestor);
+  
 
 
   if(!inv){
@@ -25,7 +26,7 @@ const Page = () => {
 { inv?.map((inv)=>(
   <div key={inv?.email}>
   
-  <InvestorCard investorName={inv?.investorName} currentRole={inv?.currentRole} investmentSector={inv?.investmentSector} picture={"pictureLink"} geographicalFocus={inv?.geographicalFocus}/>
+  <InvestorCard investorName={inv?.investorName} currentRole={inv?.currentRole} investmentSector={inv?.investmentSector} picture={inv?.invetorImage} geographicalFocus={inv?.geographicalFocus}/>
 </div>
 ))
   

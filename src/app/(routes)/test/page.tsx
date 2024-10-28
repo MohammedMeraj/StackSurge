@@ -17,6 +17,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
+
 // Remove the metadata export since this component is a client component
 
 const Test = () => {
