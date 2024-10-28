@@ -75,7 +75,7 @@ const Profile: React.FC<InvestorPrp> = (props) => {
 
 
                   <div className="w-full h-fit p-2 rounded-md flex flex-col items-center justify-center">
-                    <table className="w-full max-w-4xl table-auto border-collapse">
+                    <table className="w-full max-w-4xl table-auto border-collapse mt-8">
                       <tbody>
                         <tr className="border-b">
                           <td className="py-2 px-4  text-gray-800">
