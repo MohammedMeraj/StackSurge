@@ -56,8 +56,18 @@ export const getBusinessTypeCompany = query({
 })
 
 
+
 export const getBusinessTypeStartup = query({
     handler: async (ctx) => {
         return await ctx.db.query("company").filter((q) => q.eq(q.field("businessType"), "Startup")).collect();
     }
 })
+
+export const getCurCompanyById = query({
+    args:{
+      id: v.string()
+    },
+    handler: async(ctx, args)=>{
+        return await ctx.db.query("company").filter((q)=>q.eq(q.field("_id"),args.id)).take(1)
+    }
+  })

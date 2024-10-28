@@ -2,10 +2,13 @@
 import React from 'react'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image';
+import Link from 'next/link';
 
 // Define the shape of the props
 interface Company {
+  _id: string;
   email: string;
+  businessType: string;
   companyname: string;
   companyServices: string;
   website: string;
@@ -93,7 +96,10 @@ const CompanyCard: React.FC<CompanyCardProps> = (props) => {
                 <div className='h-11 flex items-center justify-center border border-gray-300 rounded-md text-sm p-5 cursor-pointer hover:bg-gray-100'>
                   Contact Company
                 </div>
-                <Button>Invest</Button>
+
+                {value?.businessType =="Company" ? <Link href={`/investor/companies/${value?._id}`}><Button>More Details</Button></Link> : <Link href={`/investor/startups/${value?._id}`}><Button>More Details</Button></Link>}
+                
+                
               </div>
             </div>
           </div>
