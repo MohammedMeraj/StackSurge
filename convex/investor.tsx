@@ -35,6 +35,15 @@ export const getCurrentInverstor = query({
   }
 })
 
+export const getCurInvestorById = query({
+  args:{
+    id: v.string()
+  },
+  handler: async(ctx, args)=>{
+      return await ctx.db.query("investor").filter((q)=>q.eq(q.field("_id"),args.id)).take(1)
+  }
+})
+
 export const getPictureCurrentUser = query({
   args:{
     email : v.string()

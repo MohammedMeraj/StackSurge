@@ -26,7 +26,7 @@ const Page = () => {
 { inv?.map((inv)=>(
   <div key={inv?.email}>
   
-  <InvestorCard investorName={inv?.investorName} currentRole={inv?.currentRole} investmentSector={inv?.investmentSector} picture={inv?.invetorImage} geographicalFocus={inv?.geographicalFocus}/>
+  <InvestorCard investorName={inv?.investorName} investorId={inv?._id} currentRole={inv?.currentRole} investmentSector={inv?.investmentSector} picture={inv?.invetorImage} geographicalFocus={inv?.geographicalFocus}/>
 </div>
 ))
   

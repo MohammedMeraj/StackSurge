@@ -5,6 +5,7 @@ import { ChevronDown, CircleDollarSign, MapPin } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import Link from "next/link";
 
 
 interface InvestorCrd {
@@ -14,6 +15,7 @@ interface InvestorCrd {
   investmentSector: string;
   picture: string;
   geographicalFocus: string;
+  investorId: string;
 
 }
 
@@ -65,7 +67,8 @@ const InvestorCard: React.FC<InvestorCrd> = (props) => {
           </div>
         </div>
       </div>
-      <Button className="ml-2">View</Button>
+      <Link href={`/company/investors/${props.investorId}`}><Button className="ml-2">View</Button></Link>
+      
 
       {/* Rotate the ChevronDown icon smoothly */}
       <ChevronDown
