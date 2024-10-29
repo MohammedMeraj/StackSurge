@@ -15,9 +15,9 @@ function Loggedheader() {
 
 
   return (
-    <header className=" border-b relative z-10">
+    <header className=" border-b relative z-10 bg-white">
       <div className="mx-auto max-w-screen px-4 sm:px-6 lg:px-8">
-        <div className="flex h-20 items-center justify-between pt-3">
+        <div className="flex h-fit min-h-10 pb-1 items-center justify-between pt-3">
           
 
           <div className="hidden md:block">
