@@ -79,7 +79,7 @@ const Test = () => {
 
   const chartConfig = {
     views: {
-      label: "Page Views",
+      label: "Amount Invested ($)",
     },
     desktop: {
       label: "Companies",

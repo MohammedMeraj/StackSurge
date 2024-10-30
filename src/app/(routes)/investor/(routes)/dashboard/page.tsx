@@ -6,7 +6,7 @@ import { Factory, Wallet } from 'lucide-react'
 const Dashboard = () => {
   return (
     <div className='mx-7  '>
-      <div className="text-2xl px-8 self-start font-bold mb-1 mt-4 text-gray-900">
+      <div className="text-2xl  self-start font-bold mb-1 mt-4 text-gray-900">
         Dashboard
       </div>
       <div className=' mx-auto w-full max-w-6xl h-fit items-start justify-between gap-7 mt-3'>
@@ -39,15 +39,11 @@ const Dashboard = () => {
             
           </div>
           
-          <div className=' border rounded-md p-5 mt-4 hidden'> 
-            <div className='text-lg  font-bold'>Recently Invested</div>
-            <div className='text-sm mb-2'>Showing companies you recently Invested in.</div>
-            <TrackList/> 
-            </div>
+          
 
             <div className='flex w-full h-fit items-start justify-between gap-7 mt-7 mb-7'>
-          <div className='w-[50%]'> <LineChart/> </div>
-          <div className=' border w-[50%] rounded-md p-4'> 
+          <div className='w-[40%]'> <LineChart/> </div>
+          <div className=' border w-[60%] rounded-md p-4'> 
             <div className='text-lg  font-bold'>Recently Invested</div>
             <div className='text-sm mb-2'>Showing companies you recently Invested in.</div>
             <TrackList/> 

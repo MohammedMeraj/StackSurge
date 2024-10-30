@@ -37,18 +37,18 @@ import {
 } from "@/components/ui/table";
 
 const data: Payment[] = [
-  { id: "m5gr84i9", amount: 316, status: "success", email: "ken99@yahoo.com" },
-  { id: "3u1reuv4", amount: 242, status: "success", email: "Abe45@gmail.com" },
-  { id: "derv1ws0", amount: 837, status: "processing", email: "Monserrat44@gmail.com" },
-  { id: "5kma53ae", amount: 874, status: "success", email: "Silas22@gmail.com" },
-  { id: "bhqecj4p", amount: 721, status: "failed", email: "carmella@hotmail.com" },
+  { id: "m5gr84i9", amount: 316, businessType: "company", businessName: "Zomato" },
+  { id: "3u1reuv4", amount: 242, businessType: "start up", businessName: "Electix" },
+  { id: "derv1ws0", amount: 837, businessType: "company", businessName: "Uber" },
+  { id: "5kma53ae", amount: 874, businessType: "company", businessName: "Sneaker Head" },
+  { id: "bhqecj4p", amount: 721, businessType: "start up", businessName: "Alfanzo" },
 ];
 
 export type Payment = {
   id: string;
   amount: number;
-  status: "pending" | "processing" | "success" | "failed";
-  email: string;
+  businessType: "company" | "start up" ;
+  businessName: string;
 };
 
 export const columns: ColumnDef<Payment>[] = [
@@ -75,24 +75,24 @@ export const columns: ColumnDef<Payment>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: "businessType",
+    header: "Business Type",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("status")}</div>
+      <div className="capitalize">{row.getValue("businessType")}</div>
     ),
   },
   {
-    accessorKey: "email",
+    accessorKey: "businessName",
     header: ({ column }) => (
       <Button
         variant="ghost"
         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
       >
-        Email
+        Comapany Name
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
-    cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+    cell: ({ row }) => <div>{row.getValue("businessName")}</div>,
   },
   {
     accessorKey: "amount",
@@ -173,9 +173,9 @@ export default function DataTableDemo() {
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter emails..."
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+          value={(table.getColumn("businessName")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
+            table.getColumn("businessName")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />

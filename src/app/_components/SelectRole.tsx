@@ -60,9 +60,9 @@ const SelectRole = () => {
           </AlertDialogTrigger>
           <AlertDialogContent className="bg-white">
             <AlertDialogHeader>
-              <AlertDialogTitle>Login as an Investor</AlertDialogTitle>
+              <AlertDialogTitle>Register as an Investor</AlertDialogTitle>
               <AlertDialogDescription>
-                You are about to login as an investor, do you still want to
+                You are about to Register as an investor, do you still want to
                 continue?
               </AlertDialogDescription>
             </AlertDialogHeader>
@@ -85,9 +85,9 @@ const SelectRole = () => {
           </AlertDialogTrigger>
           <AlertDialogContent className="bg-white">
             <AlertDialogHeader>
-              <AlertDialogTitle>Login as a Company</AlertDialogTitle>
+              <AlertDialogTitle>Register as a Company</AlertDialogTitle>
               <AlertDialogDescription>
-                You are about to login as a company, do you still want to continue?
+                You are about to Register as a company, do you still want to continue?
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
