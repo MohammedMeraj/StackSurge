@@ -24,8 +24,8 @@ const Companysidebar = () => {
       <div className="border-t border-gray-100">
         <div className="px-2">
           <div className="py-4">
-            <a
-              href="#"
+            <Link
+              href="/company/dashboard"
               className="t group relative flex justify-center rounded bg-blue-50 px-2 py-1.5 text-blue-700"
             >
               <LayoutDashboard size={20} color="#8f8f8f" strokeWidth={1.75} />
@@ -35,13 +35,13 @@ const Companysidebar = () => {
               >
                 Dashboard
               </span>
-            </a>
+            </Link>
           </div>
 
           <ul className="space-y-1 border-t border-gray-100 pt-4">
             <li>
-              <a
-                href="#"
+              <Link
+                href="/company/statistics"
                 className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
               >
                 <ChartColumnIncreasing  size={20} color="#8f8f8f" strokeWidth={1.75} />
@@ -53,11 +53,11 @@ const Companysidebar = () => {
                 >
                   Statistics
                 </span>
-              </a>
+              </Link>
             </li>
 
             <li>
-              <a
+              <Link
                 href="/company/investors"
                 className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
               >
@@ -69,7 +69,7 @@ const Companysidebar = () => {
                 >
                   Find Investors
                 </span>
-              </a>
+              </Link>
             </li>
 
             <li>
@@ -149,25 +149,21 @@ const Companysidebar = () => {
       <ul className="mt-6 space-y-1">
         <li>
           <Link
-            href="/company"
+            href="/company/dashboard"
             className="block rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700"
           >
            Dashboard
           </Link>
         </li>
 
+
         <li>
-          <details className="group [&_summary::-webkit-details-marker]:hidden">
-            <summary
-              className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-            >
-              <span className="text-sm font-medium">Statistics </span>
-
-              
-            </summary>
-
-            
-          </details>
+          <Link
+            href="/company/statistics"
+            className="block rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700"
+          >
+           Statistics
+          </Link>
         </li>
 
         <li>
