@@ -37,18 +37,34 @@ import {
 } from "@/components/ui/table";
 
 const data: Payment[] = [
-  { id: "m5gr84i9", amount: 316, businessType: "company", businessName: "Zomato" },
-  { id: "3u1reuv4", amount: 242, businessType: "start up", businessName: "Electix" },
-  { id: "derv1ws0", amount: 837, businessType: "company", businessName: "Uber" },
-  { id: "5kma53ae", amount: 874, businessType: "company", businessName: "Sneaker Head" },
-  { id: "bhqecj4p", amount: 721, businessType: "start up", businessName: "Alfanzo" },
+    { id: "x2fg84kd", equity: 453, investorName: "TechVentures", companyEmail: "contact@spacexventures.com" },
+  { id: "b1n7ej49", equity: 212, investorName: "NextGen", companyEmail: "info@teslafinance.com" },
+  { id: "v0hs93re", equity: 378, investorName: "Sarah Adams", companyEmail: "sarah.adams@appleinvestors.com" },
+  { id: "j4tgz8qw", equity: 539, investorName: "StartupHub", companyEmail: "invest@microsofthub.com" },
+  { id: "d9oi5fg2", equity: 621, investorName: "Growth Capital", companyEmail: "team@googlegrowth.com" },
+  { id: "a5kz9x7u", equity: 298, investorName: "Blue Sky Investments", companyEmail: "connect@blueskyamazon.com" },
+  { id: "z3g5vs1e", equity: 834, investorName: "Pioneer Partners", companyEmail: "partners@netflixpioneers.com" },
+  { id: "f9kj2lz6", equity: 150, investorName: "SeedFund", companyEmail: "contact@airbnbfund.com" },
+  { id: "h7qu1xn3", equity: 492, investorName: "John Roberts", companyEmail: "john.roberts@facebookbackers.com" },
+  { id: "g2pq9wj8", equity: 777, investorName: "Elite Ventures", companyEmail: "support@twitterelite.com" },
+  { id: "k5rm8ox4", equity: 264, investorName: "Lucy Hale", companyEmail: "lucy.hale@snapinvest.com" },
+  { id: "n8zr6ly2", equity: 585, investorName: "Urban Invest", companyEmail: "hello@urbanlinkedin.com" },
+  { id: "m3tj9qa7", equity: 347, investorName: "Franklin Doe", companyEmail: "franklin.doe@stripesolutions.com" },
+  { id: "p4dk1ut9", equity: 450, investorName: "Capital Edge", companyEmail: "team@spotifyedge.com" },
+  { id: "u6vn3eb5", equity: 325, investorName: "Nathan Pierce", companyEmail: "nathan.pierce@shopifygroup.com" },
+  { id: "q9hs4zm6", equity: 580, investorName: "Aspire Holdings", companyEmail: "info@aspireuber.com" },
+  { id: "l2cg5ik3", equity: 419, investorName: "Alice Zhang", companyEmail: "alice.zhang@adobeinvest.com" },
+  { id: "t5pj7qx1", equity: 710, investorName: "Innovation Fund", companyEmail: "contact@coinbaseinnovators.com" },
+  { id: "w3bv2ol4", equity: 295, investorName: "Charlie Brown", companyEmail: "charlie.brown@tiktokinvestments.com" },
+  { id: "y8mh6sd9", equity: 675, investorName: "Prime Capital", companyEmail: "support@pinterestprime.com" }
+  
 ];
 
 export type Payment = {
   id: string;
-  amount: number;
-  businessType: "company" | "start up" ;
-  businessName: string;
+ equity: number;
+  investorName: string;
+  companyEmail: string;
 };
 
 export const columns: ColumnDef<Payment>[] = [
@@ -75,30 +91,30 @@ export const columns: ColumnDef<Payment>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "businessType",
-    header: "Business Type",
+    accessorKey: "investorName",
+    header: "Name",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("businessType")}</div>
+      <div className="capitalize">{row.getValue("investorName")}</div>
     ),
   },
   {
-    accessorKey: "businessName",
+    accessorKey: "companyEmail",
     header: ({ column }) => (
       <Button
         variant="ghost"
         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
       >
-        Company Name
+        Company Email
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
-    cell: ({ row }) => <div>{row.getValue("businessName")}</div>,
+    cell: ({ row }) => <div>{row.getValue("companyEmail")}</div>,
   },
   {
-    accessorKey: "amount",
-    header: () => <div className="text-right">Amount</div>,
+    accessorKey: "equity",
+    header: () => <div className="text-right">Invested Amount</div>,
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount") as string);
+      const amount = parseFloat(row.getValue("equity") as string);
 
       // Format the amount as a dollar amount
       const formatted = new Intl.NumberFormat("en-US", {
@@ -172,10 +188,10 @@ export default function DataTableDemo() {
     <div className="w-full">
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter Company..."
-          value={(table.getColumn("businessName")?.getFilterValue() as string) ?? ""}
+          placeholder="Search by Email..."
+          value={(table.getColumn("companyEmail")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("businessName")?.setFilterValue(event.target.value)
+            table.getColumn("companyEmail")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />

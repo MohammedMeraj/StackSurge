@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import Image from 'next/image'
-import { ChartColumnIncreasing ,LayoutDashboard,Handshake,PenLine,CircleUser } from 'lucide-react';
+import { LayoutDashboard,Handshake,PenLine,CircleUser, Boxes } from 'lucide-react';
 import { LogoutLink } from '@kinde-oss/kinde-auth-nextjs';
 import Link from 'next/link';
 
@@ -41,17 +41,17 @@ const Companysidebar = () => {
           <ul className="space-y-1 border-t border-gray-100 pt-4">
             <li>
               <Link
-                href="/company/statistics"
+                href="/company/equity-holder"
                 className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
               >
-                <ChartColumnIncreasing  size={20} color="#8f8f8f" strokeWidth={1.75} />
+                <Boxes  size={20} color="#8f8f8f" strokeWidth={1.75} />
                 
                 
 
                 <span
                   className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible"
                 >
-                  Statistics
+                  Equity Holders
                 </span>
               </Link>
             </li>
@@ -159,10 +159,10 @@ const Companysidebar = () => {
 
         <li>
           <Link
-            href="/company/statistics"
+            href="/company/equity-holder"
             className="block rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700"
           >
-           Statistics
+           Equity Holders
           </Link>
         </li>
 
