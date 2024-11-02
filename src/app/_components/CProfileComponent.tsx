@@ -1,11 +1,14 @@
 "use client";
 
 
+import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 interface CprofileCmp{
+    fldCompanyId: string;
     fldImage: string;
     fldCompanyName: string;
     fldCompanyServices: string;
@@ -134,6 +137,11 @@ const Page: React.FC<CprofileCmp> = (props) => {
                   </div>
                 </div>
               </div>
+              <Link href={`/investor/companies/${props.fldCompanyId}/invest`}>
+            <Button className="mt-10 w-full">Invest</Button>
+          </Link>
+              
+              
             </div>
           </div>
         </div>
