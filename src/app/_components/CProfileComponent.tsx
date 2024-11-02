@@ -32,7 +32,7 @@ interface CprofileCmp{
 const Page: React.FC<CprofileCmp> = (props) => {
   
 
-  
+
 
   return (
     <div>
@@ -137,6 +137,7 @@ const Page: React.FC<CprofileCmp> = (props) => {
                   </div>
                 </div>
               </div>
+              
               <Link href={`/investor/companies/${props.fldCompanyId}/invest`}>
             <Button className="mt-10 w-full">Invest</Button>
           </Link>

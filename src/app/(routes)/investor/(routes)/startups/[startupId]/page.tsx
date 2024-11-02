@@ -45,6 +45,7 @@ const CompanyDetails = ({ params }: { params: { startupId: string } }) => {
       </div>
       <div className="px-8 mt-10 mb-3">
         <CProfileComponent
+          fldCompanyId={params.startupId}
           fldCompanyName={data?.companyname}
           fldCompanyEmail={data?.companyEmail}
           fldBurnRate={data?.burnRate}
