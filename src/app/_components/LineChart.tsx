@@ -35,7 +35,7 @@ const chartData = React.useMemo(() => [
 
 const chartConfig = {
   desktop: {
-    label: "Desktop",
+    label: "Invested Amount:",
     color: "#36454f",
   }
  
@@ -49,7 +49,7 @@ const chartConfig = {
           <div>
                     <Card>
                 <CardHeader>
-                  <CardTitle>Line Chart - Dots</CardTitle>
+                  <CardTitle>Investment Growth</CardTitle>
                   <CardDescription>January - June 2024</CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -91,10 +91,10 @@ const chartConfig = {
                 </CardContent>
                 <CardFooter className="flex-col items-start gap-2 text-sm">
                   <div className="flex gap-2 font-medium leading-none">
-                    Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+                    Investment Growth Rate: 5.2% Increase <TrendingUp className="h-4 w-4" />
                   </div>
                   <div className="leading-none text-muted-foreground">
-                    Showing total visitors for the last 6 months
+                  Total Investments Over Last 6 Months
                   </div>
                 </CardFooter>
               </Card>
