@@ -12,6 +12,8 @@ const CuserProfile = () => {
   const name = user?.given_name;
   const email = user?.email;
   const picture = user?.picture ? user?.picture : "";
+  console.log(picture)
+
   
   return (
     <div className='w-[100%]  border rounded-md flex flex-col items-center justify-center'>
