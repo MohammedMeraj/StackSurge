@@ -1,168 +1,149 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import { useState, FormEvent } from 'react';
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
+interface PredictionResult {
+  prediction: number;
+  probability: number;
+  message: string;
+}
 
+interface ErrorResponse {
+  error: string;
+}
 
-// Remove the metadata export since this component is a client component
+export default function PredictPage() {
+  const [yearsExp, setYearsExp] = useState('');
+  const [prevSuccess, setPrevSuccess] = useState('');
+  const [marketSize, setMarketSize] = useState('');
+  const [mvpRate, setMvpRate] = useState('');
+  const [result, setResult] = useState<PredictionResult | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-const Test = () => {
-  const [activeChart, setActiveChart] = React.useState<keyof typeof chartConfig>("desktop");
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setResult(null);
+    setIsLoading(true);
 
-  const chartData = React.useMemo(() => [
-    { date: "2024-04-01", desktop: 222, mobile: 150 },
-    { date: "2024-04-02", desktop: 97, mobile: 180 },
-    { date: "2024-04-03", desktop: 167, mobile: 120 },
-    { date: "2024-04-04", desktop: 242, mobile: 260 },
-    { date: "2024-04-05", desktop: 373, mobile: 290 },
-    { date: "2024-04-06", desktop: 301, mobile: 340 },
-    { date: "2024-04-07", desktop: 245, mobile: 180 },
-    { date: "2024-04-08", desktop: 409, mobile: 320 },
-    { date: "2024-04-09", desktop: 59, mobile: 110 },
-    { date: "2024-04-10", desktop: 261, mobile: 190 },
-    { date: "2024-04-11", desktop: 327, mobile: 350 },
-    { date: "2024-04-12", desktop: 292, mobile: 210 },
-    { date: "2024-04-13", desktop: 342, mobile: 380 },
-    { date: "2024-04-14", desktop: 137, mobile: 220 },
-    { date: "2024-04-15", desktop: 120, mobile: 170 },
-    { date: "2024-04-16", desktop: 138, mobile: 190 },
-    { date: "2024-04-17", desktop: 446, mobile: 360 },
-    { date: "2024-04-18", desktop: 364, mobile: 410 },
-    { date: "2024-04-19", desktop: 243, mobile: 180 },
-    { date: "2024-04-20", desktop: 89, mobile: 150 },
-    { date: "2024-04-21", desktop: 137, mobile: 200 },
-    { date: "2024-04-22", desktop: 224, mobile: 170 },
-    { date: "2024-04-23", desktop: 138, mobile: 230 },
-    { date: "2024-04-24", desktop: 387, mobile: 290 },
-    { date: "2024-04-25", desktop: 215, mobile: 250 },
-    { date: "2024-04-26", desktop: 75, mobile: 130 },
-    { date: "2024-04-27", desktop: 383, mobile: 420 },
-    { date: "2024-04-28", desktop: 122, mobile: 180 },
-    { date: "2024-04-29", desktop: 315, mobile: 240 },
-    { date: "2024-04-30", desktop: 454, mobile: 380 },
-    { date: "2024-05-01", desktop: 165, mobile: 220 },
-    { date: "2024-05-02", desktop: 293, mobile: 310 },
-    { date: "2024-05-03", desktop: 247, mobile: 190 },
-    { date: "2024-05-04", desktop: 385, mobile: 420 },
-    { date: "2024-05-05", desktop: 481, mobile: 390 },
-    { date: "2024-05-06", desktop: 498, mobile: 520 },
-    { date: "2024-05-07", desktop: 388, mobile: 300 },
-    { date: "2024-05-08", desktop: 149, mobile: 210 },
-    { date: "2024-05-09", desktop: 227, mobile: 180 },
-    { date: "2024-05-10", desktop: 293, mobile: 330 },
-    { date: "2024-05-11", desktop: 335, mobile: 270 },
-    { date: "2024-05-12", desktop: 197, mobile: 240 },
-    { date: "2024-05-13", desktop: 197, mobile: 160 },
-    ], [])
+    try {
+      const response = await fetch('https://stacksurgeservice.onrender.com/predict', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          years_exp: parseFloat(yearsExp),
+          prev_success: parseInt(prevSuccess),
+          market_size: parseFloat(marketSize),
+          mvp_rate: parseFloat(mvpRate),
+        }),
+      });
 
-  const total = React.useMemo(
-    () => ({
-      desktop: chartData.reduce((acc, curr) => acc + curr.desktop, 0),
-      mobile: chartData.reduce((acc, curr) => acc + curr.mobile, 0),
-    }),
-    [chartData]
-  );
+      const data: PredictionResult | ErrorResponse = await response.json();
 
-  const chartConfig = {
-    views: {
-      label: "Page Views",
-    },
-    desktop: {
-      label: "Desktop",
-      color: "hsl(var(--chart-1))",
-    },
-    mobile: {
-      label: "Mobile",
-      color: "hsl(var(--chart-2))",
-    },
-  } satisfies ChartConfig;
+      if ('error' in data) {
+        setError(data.error);
+      } else {
+        setResult(data as PredictionResult);
+      }
+    } catch (err) {
+      setError('Failed to connect to the API. Please try again later.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
-    <div className="max-w-[70vw] mx-auto my-auto">
-      <Card>
-        <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
-          <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
-            <CardTitle>Bar Chart - Interactive</CardTitle>
-            <CardDescription>
-              Showing total visitors for the last 3 months
-            </CardDescription>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">
+          Startup Profitability Predictor
+        </h1>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label htmlFor="yearsExp" className="block text-sm font-medium text-gray-700">
+              Years of Experience
+            </label>
+            <input
+              id="yearsExp"
+              type="number"
+              step="0.1"
+              value={yearsExp}
+              onChange={(e) => setYearsExp(e.target.value)}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              required
+            />
           </div>
-          <div className="flex">
-            {["desktop", "mobile"].map((key) => {
-              const chart = key as keyof typeof chartConfig;
-              return (
-                <button
-                  key={chart}
-                  data-active={activeChart === chart}
-                  className="relative z-30 flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left even:border-l data-[active=true]:bg-muted/50 sm:border-l sm:border-t-0 sm:px-8 sm:py-6"
-                  onClick={() => setActiveChart(chart)}
-                >
-                  <span className="text-xs text-muted-foreground">
-                    {chartConfig[chart].label}
-                  </span>
-                  <span className="text-lg font-bold leading-none sm:text-3xl">
-                    {total[key as keyof typeof total].toLocaleString()}
-                  </span>
-                </button>
-              );
-            })}
+          <div>
+            <label htmlFor="prevSuccess" className="block text-sm font-medium text-gray-700">
+              Previous Successes
+            </label>
+            <input
+              id="prevSuccess"
+              type="number"
+              step="1"
+              value={prevSuccess}
+              onChange={(e) => setPrevSuccess(e.target.value)}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              required
+            />
           </div>
-        </CardHeader>
-        <CardContent className="px-2 sm:p-6">
-          <ChartContainer config={chartConfig} className="aspect-auto h-[250px] w-full">
-            <BarChart accessibilityLayer data={chartData} margin={{ left: 12, right: 12 }}>
-              <CartesianGrid vertical={false} />
-              <XAxis
-                dataKey="date"
-                tickLine={false}
-                axisLine={false}
-                tickMargin={8}
-                minTickGap={32}
-                tickFormatter={(value) => {
-                  const date = new Date(value);
-                  return date.toLocaleDateString("en-US", {
-                    month: "short",
-                    day: "numeric",
-                  });
-                }}
-              />
-              <ChartTooltip
-                content={
-                  <ChartTooltipContent
-                    className="w-[150px]"
-                    nameKey="views"
-                    labelFormatter={(value) => {
-                      return new Date(value).toLocaleDateString("en-US", {
-                        month: "short",
-                        day: "numeric",
-                        year: "numeric",
-                      });
-                    }}
-                  />
-                }
-              />
-              <Bar dataKey={activeChart} fill={`var(--color-${activeChart})`} />
-            </BarChart>
-          </ChartContainer>
-        </CardContent>
-      </Card>
+          <div>
+            <label htmlFor="marketSize" className="block text-sm font-medium text-gray-700">
+              Market Size (Millions)
+            </label>
+            <input
+              id="marketSize"
+              type="number"
+              step="0.1"
+              value={marketSize}
+              onChange={(e) => setMarketSize(e.target.value)}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="mvpRate" className="block text-sm font-medium text-gray-700">
+              MVP Success Rate (0 to 1)
+            </label>
+            <input
+              id="mvpRate"
+              type="number"
+              step="0.01"
+              min="0"
+              max="1"
+              value={mvpRate}
+              onChange={(e) => setMvpRate(e.target.value)}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            disabled={isLoading}
+            className={`w-full py-2 px-4 rounded-md text-white font-semibold ${
+              isLoading ? 'bg-gray-400 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-700'
+            }`}
+          >
+            {isLoading ? 'Predicting...' : 'Predict'}
+          </button>
+        </form>
+
+        {error && (
+          <div className="mt-4 p-4 bg-red-100 text-red-700 rounded-md">
+            <p>{error}</p>
+          </div>
+        )}
+
+        {result && (
+          <div className="mt-4 p-4 bg-green-100 text-green-700 rounded-md">
+            <p className="font-semibold">Prediction: {result.message}</p>
+            <p>Probability of Profitability: {result.probability}%</p>
+          </div>
+        )}
+      </div>
     </div>
   );
-};
-
-export default Test;
-
+}
