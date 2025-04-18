@@ -35,8 +35,12 @@ const PredictPage = () => {
 
       const data = await res.json();
       setResponse(JSON.stringify(data, null, 2));
-    } catch (err: any) {
-      setResponse(`Request failed: ${err.message}`);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setResponse(`Request failed: ${err.message}`);
+      } else {
+        setResponse('An unknown error occurred');
+      }
     } finally {
       setLoading(false);
     }
@@ -83,7 +87,7 @@ const PredictPage = () => {
         />
         <button
           type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          className="bg-gray-900 text-white px-4 py-2 rounded hover:bg-gray-800"
           disabled={loading}
         >
           {loading ? 'Predicting...' : 'Submit'}
