@@ -154,6 +154,7 @@ const Page = () => {
         },
       });
       console.log(values);
+      console.log("Registered")
     }
   }
 

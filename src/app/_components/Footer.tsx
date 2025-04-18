@@ -18,7 +18,7 @@ function Footer() {
         <div className='px-8'>
             <div className='text-3xl font-bold italic font-sans'>Important Links</div>
             <div className='mt-2'>
-                <a href="">Home</a> <br/> <a href="">About Us</a> <br/> <a href="">Contact Us</a> <br/> <a href="">Documentation</a>
+                <a href="">Home</a> <br/> <a href="https://github.com/MohammedMeraj">About Us</a> <br/> <a href="">Contact Us</a> <br/> <a href="">Documentation</a>
             </div>
         </div>
     </div>
