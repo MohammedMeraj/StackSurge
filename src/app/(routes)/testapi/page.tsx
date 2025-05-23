@@ -97,6 +97,7 @@ const PredictPage = () => {
       {response && (
         <pre className="mt-6 p-4 bg-gray-100 rounded overflow-x-auto">
           {response}
+
         </pre>
       )}
     </div>
