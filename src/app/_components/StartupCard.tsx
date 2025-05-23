@@ -183,7 +183,7 @@ const CompanyCard: React.FC<CompanyCardProps> = (props) => {
 
               <div className='flex flex-row items-center justify-between rounded-md overflow-hidden'>
                 <div className='text-base font-bold text-gray-700'>
-                  Total Valuation: $ {value?.latestValuation}
+                  
                 </div>
                 <div className='flex flex-row items-center justify-center gap-6'>
                   <div className='h-11 flex items-center justify-center border border-gray-300 rounded-md text-sm p-5 cursor-pointer hover:bg-gray-100'>
