@@ -65,6 +65,108 @@ const formSchema = z.object({
   achievementRate: z.string().optional(),
   marketSize: z.string().optional(),
   mvpSuccessRate: z.string().optional(),
+}).superRefine((data, ctx) => {
+  // Validation for startup fields when businessType is "Start Up"
+  if (data.businessType === "Start Up") {
+    // Years of Experience validation
+    if (!data.yearsOfExperience || data.yearsOfExperience.trim() === "") {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Years of Experience is required for startups",
+        path: ["yearsOfExperience"],
+      });
+    } else {
+      const years = parseFloat(data.yearsOfExperience);
+      if (isNaN(years) || years < 0 || years > 50) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Years of Experience must be between 0 and 50",
+          path: ["yearsOfExperience"],
+        });
+      }
+    }
+
+    // Achievement Rate validation
+    if (!data.achievementRate || data.achievementRate.trim() === "") {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Achievement Rate is required for startups",
+        path: ["achievementRate"],
+      });
+    } else {
+      const rate = parseFloat(data.achievementRate);
+      if (isNaN(rate) || rate < 0 || rate > 1) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Achievement Rate must be between 0 and 1",
+          path: ["achievementRate"],
+        });
+      }
+    }
+
+    // Market Size validation
+    if (!data.marketSize || data.marketSize.trim() === "") {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Market Size is required for startups",
+        path: ["marketSize"],
+      });
+    } else {
+      const size = parseFloat(data.marketSize);
+      if (isNaN(size) || size <= 0) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Market Size must be a positive number (in millions)",
+          path: ["marketSize"],
+        });
+      }
+    }
+
+    // MVP Success Rate validation
+    if (!data.mvpSuccessRate || data.mvpSuccessRate.trim() === "") {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "MVP Success Rate is required for startups",
+        path: ["mvpSuccessRate"],
+      });
+    } else {
+      const rate = parseFloat(data.mvpSuccessRate);
+      if (isNaN(rate) || rate < 0 || rate > 1) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "MVP Success Rate must be between 0 and 1",
+          path: ["mvpSuccessRate"],
+        });
+      }
+    }
+  }
+
+  // Validation for company fields when businessType is "Company"
+  if (data.businessType === "Company") {
+    const companyFields = [
+      { field: "grossMargin", label: "Gross Margin" },
+      { field: "netProfitMargin", label: "Net Profit Margin" },
+      { field: "operatingMargin", label: "Operating Margin" },
+      { field: "freeCashFlow", label: "Free Cash Flow" },
+      { field: "burnRate", label: "Burn Rate" },
+      { field: "latestValuation", label: "Latest Valuation" },
+      { field: "ebitda", label: "EBITDA" },
+      { field: "projectedValuation", label: "Projected Valuation" },
+      { field: "currentRevenue", label: "Current Revenue" },
+      { field: "revenueIncreased", label: "Revenue Increased" },
+    ];
+
+    companyFields.forEach(({ field, label }) => {
+      const value = data[field as keyof typeof data];
+      if (!value || (typeof value === "string" && value.trim() === "")) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: `${label} is required for companies`,
+          path: [field],
+        });
+      }
+    });
+  }
 });
 
 const Page = () => {
@@ -348,16 +450,19 @@ const Page = () => {
                       name="yearsOfExperience"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Years of Experience</FormLabel>
+                          <FormLabel>Years of Experience *</FormLabel>
                           <FormControl>
                             <Input
                               type="number"
-                              placeholder="Enter Years"
+                              placeholder="Enter years (0-50)"
+                              min="0"
+                              max="50"
+                              step="0.1"
                               {...field}
                             />
                           </FormControl>
                           <FormDescription>
-                            Years of experience in the industry
+                            Years of experience in the industry (0-50 years)
                           </FormDescription>
                           <FormMessage />
                         </FormItem>
@@ -368,16 +473,19 @@ const Page = () => {
                       name="achievementRate"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Historical Achievement Rate &#40; &#37; &#41;</FormLabel>
+                          <FormLabel>Historical Achievement Rate &#40; 0-1 &#41; *</FormLabel>
                           <FormControl>
                             <Input
                               type="number"
-                              placeholder="Enter Percentage"
+                              placeholder="Enter rate (0-1)"
+                              min="0"
+                              max="1"
+                              step="0.01"
                               {...field}
                             />
                           </FormControl>
                           <FormDescription>
-                            Historical achievement rate percentage
+                            Historical achievement rate (0-1, e.g., 0.8 for 80%)
                           </FormDescription>
                           <FormMessage />
                         </FormItem>
@@ -390,16 +498,18 @@ const Page = () => {
                       name="marketSize"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Market Size &#40; &#36; &#41;</FormLabel>
+                          <FormLabel>Market Size &#40; Million &#36; &#41; *</FormLabel>
                           <FormControl>
                             <Input
                               type="number"
-                              placeholder="Enter Market Size"
+                              placeholder="Enter size in millions"
+                              min="0"
+                              step="0.1"
                               {...field}
                             />
                           </FormControl>
                           <FormDescription>
-                            Total addressable market size
+                            Total addressable market size in million dollars
                           </FormDescription>
                           <FormMessage />
                         </FormItem>
@@ -410,16 +520,19 @@ const Page = () => {
                       name="mvpSuccessRate"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>MVP Success Rate &#40; &#37; &#41;</FormLabel>
+                          <FormLabel>MVP Success Rate &#40; 0-1 &#41; *</FormLabel>
                           <FormControl>
                             <Input
                               type="number"
-                              placeholder="Enter Success Rate"
+                              placeholder="Enter rate (0-1)"
+                              min="0"
+                              max="1"
+                              step="0.01"
                               {...field}
                             />
                           </FormControl>
                           <FormDescription>
-                            Minimum viable product success rate
+                            Minimum viable product success rate (0-1)
                           </FormDescription>
                           <FormMessage />
                         </FormItem>
@@ -439,7 +552,7 @@ const Page = () => {
                       name="grossMargin"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Gross Margin &#40; &#36; &#41; </FormLabel>
+                          <FormLabel>Gross Margin &#40; &#36; &#41; *</FormLabel>
                           <FormControl>
                             <Input
                               type="number"
@@ -460,7 +573,7 @@ const Page = () => {
                       name="netProfitMargin"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Net Profit Margin &#40; &#36; &#41;</FormLabel>
+                          <FormLabel>Net Profit Margin &#40; &#36; &#41; *</FormLabel>
                           <FormControl>
                             <Input
                               type="number"
@@ -481,7 +594,7 @@ const Page = () => {
                       name="operatingMargin"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Operatig Margin &#40; &#36; &#41;</FormLabel>
+                          <FormLabel>Operatig Margin &#40; &#36; &#41; *</FormLabel>
                           <FormControl>
                             <Input
                               type="number"
@@ -509,7 +622,7 @@ const Page = () => {
                       name="freeCashFlow"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Free Cash Flow &#40; &#36; &#41; </FormLabel>
+                          <FormLabel>Free Cash Flow &#40; &#36; &#41; *</FormLabel>
                           <FormControl>
                             <Input
                               type="number"
@@ -530,7 +643,7 @@ const Page = () => {
                       name="burnRate"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Burn Rate &#40; &#36; &#41;</FormLabel>
+                          <FormLabel>Burn Rate &#40; &#36; &#41; *</FormLabel>
                           <FormControl>
                             <Input
                               type="number"
@@ -558,7 +671,7 @@ const Page = () => {
                       name="latestValuation"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Latest valuation &#40; &#36; &#41; </FormLabel>
+                          <FormLabel>Latest valuation &#40; &#36; &#41; *</FormLabel>
                           <FormControl>
                             <Input
                               type="number"
@@ -579,7 +692,7 @@ const Page = () => {
                       name="ebitda"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>EBITDA &#40; &#36; &#41;</FormLabel>
+                          <FormLabel>EBITDA &#40; &#36; &#41; *</FormLabel>
                           <FormControl>
                             <Input
                               type="number"
@@ -599,7 +712,7 @@ const Page = () => {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>
-                            Projected Valuation &#40; &#36; &#41;
+                            Projected Valuation &#40; &#36; &#41; *
                           </FormLabel>
                           <FormControl>
                             <Input
@@ -628,7 +741,7 @@ const Page = () => {
                       name="currentRevenue"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Current Revenue &#40; &#36; &#41; </FormLabel>
+                          <FormLabel>Current Revenue &#40; &#36; &#41; *</FormLabel>
                           <FormControl>
                             <Input
                               type="number"
@@ -649,7 +762,7 @@ const Page = () => {
                       name="revenueIncreased"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Revenue increased &#40; &#36; &#41;</FormLabel>
+                          <FormLabel>Revenue increased &#40; &#36; &#41; *</FormLabel>
                           <FormControl>
                             <Input
                               type="number"
