@@ -103,7 +103,7 @@ const Page = () => {
                 </div>
               )}
 
-              {eliz?.businessType === 'company' && (
+              {eliz?.businessType === 'Company' && (
                 // Company specific data - ONLY show when type is company
                 <>
                   <div className="flex justify-center mt-10 gap-20 mx-auto w-[90%] ">
