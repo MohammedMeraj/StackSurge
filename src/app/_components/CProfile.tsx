@@ -38,10 +38,6 @@ const Page = () => {
                 
                <Image alt="" src={eliz?.companyLogo} width={100} height={100} className=" rounded-md w-20 h-20" />
                 
-                
-                
-
-
                 <div>
                   <div className="text-3xl font-bold text-gray-800">
                     {eliz?.companyname}
@@ -59,7 +55,7 @@ const Page = () => {
             </div>
             <div className="w-[90%] bg-gray-800 text-white text-sm flex items-center justify-center gap-[5%] p-2 rounded-md  mx-auto mb-10 ">
               <div className="w-[75%] ml-[5%]">
-                Your Company is currently not verified. Verify your company to
+                Your {eliz?.businessType === 'Start Up' ? 'Start Up' : 'Company'} is currently not verified. Verify your {eliz?.businessType === 'Start Up' ? 'Start Up' : 'company'} to
                 get investments.
               </div>
               <div className=" h-fit py-2 w-fit mr-[5%] px-5 bg-white text-gray-800 flex items-center justify-center rounded-full cursor-pointer">
@@ -72,72 +68,112 @@ const Page = () => {
               <div className="text-base mb-2 mt-7">Email</div>
               <div className="ml-5 text-base">{eliz?.companyEmail}</div>
 
-              <div className="flex justify-center mt-10 gap-20 mx-auto w-[90%] ">
-                <div className="w-[40%]">
-                  <div className="text-gray-800 text-lg mt-5 mb-2">
-                    Revenue Growth
-                  </div>
-                  <Separator />
-                  <div className="ml-5 mb-2  text-base mt-4">
-                    <div className="text-base">
-                      Current revenue : {eliz?.currentRevenue} million
+              {/* Conditional rendering based on businessType */}
+              {eliz?.businessType === 'Start Up' && (
+                // Startup specific data - ONLY show when type is startup
+                <div className="flex justify-center mt-10 gap-20 mx-auto w-[90%] ">
+                  <div className="w-[40%]">
+                    <div className="text-gray-800 text-lg mt-5 mb-2">
+                      Experience & Achievement
                     </div>
-                    <div className="text-base">
-                      revenue up by {eliz?.revenueIncreased} %
-                    </div>
-                  </div>
-                </div>
-                <div className=" w-[40%] ">
-                  <div className="text-gray-800 text-lg mt-5 mb-2">
-                    Cash Flow
-                  </div>
-                  <Separator />
-                  <div className="ml-5 mb-2  text-base mt-4">
-                    <div className="text-base">
-                      Free Cash Flow: $ {eliz?.freeCashFlow} million
-                    </div>
-                    <div className="text-base">
-                      Burn Rate: $ {eliz?.burnRate} million/month
+                    <Separator />
+                    <div className="ml-5 mb-2  text-base mt-4">
+                      <div className="text-base">
+                        Years of Experience: {eliz?.yearsOfExperience} years
+                      </div>
+                      <div className="text-base">
+                        Achievement Rate: {eliz?.achievementRate} %
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-              <div className="flex justify-center gap-20 mx-auto w-[90%] mt-6">
-                <div className="w-[40%]">
-                  <div className="text-gray-800 text-lg mt-5 mb-2">
-                    Profit Margin
-                  </div>
-                  <Separator />
-                  <div className="ml-5 mb-2  text-base mt-4">
-                    <div className="text-base">
-                      Gross Margin : {eliz?.grossMargin} %
+                  <div className=" w-[40%] ">
+                    <div className="text-gray-800 text-lg mt-5 mb-2">
+                      Market & MVP
                     </div>
-                    <div className="text-base">
-                      Operating Margin: {eliz?.operatingMargin} %
-                    </div>
-                    <div className="text-base">
-                      Net Profit Margin: {eliz?.netProfitMargin} %
+                    <Separator />
+                    <div className="ml-5 mb-2  text-base mt-4">
+                      <div className="text-base">
+                        Market Size: $ {eliz?.marketSize} million
+                      </div>
+                      <div className="text-base">
+                        MVP Success Rate: {eliz?.mvpSuccessRate} %
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div className=" w-[40%] ">
-                  <div className="text-gray-800 text-lg mt-5 mb-2">
-                    Valuation
+              )}
+
+              {eliz?.businessType === 'company' && (
+                // Company specific data - ONLY show when type is company
+                <>
+                  <div className="flex justify-center mt-10 gap-20 mx-auto w-[90%] ">
+                    <div className="w-[40%]">
+                      <div className="text-gray-800 text-lg mt-5 mb-2">
+                        Revenue Growth
+                      </div>
+                      <Separator />
+                      <div className="ml-5 mb-2  text-base mt-4">
+                        <div className="text-base">
+                          Current revenue : {eliz?.currentRevenue} million
+                        </div>
+                        <div className="text-base">
+                          revenue up by {eliz?.revenueIncreased} %
+                        </div>
+                      </div>
+                    </div>
+                    <div className=" w-[40%] ">
+                      <div className="text-gray-800 text-lg mt-5 mb-2">
+                        Cash Flow
+                      </div>
+                      <Separator />
+                      <div className="ml-5 mb-2  text-base mt-4">
+                        <div className="text-base">
+                          Free Cash Flow: $ {eliz?.freeCashFlow} million
+                        </div>
+                        <div className="text-base">
+                          Burn Rate: $ {eliz?.burnRate} million/month
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <Separator />
-                  <div className="ml-5 mb-2  text-base mt-4">
-                    <div className="text-base">
-                      Latest Valuation: $ {eliz?.latestValuation} billion
+                  <div className="flex justify-center gap-20 mx-auto w-[90%] mt-6">
+                    <div className="w-[40%]">
+                      <div className="text-gray-800 text-lg mt-5 mb-2">
+                        Profit Margin
+                      </div>
+                      <Separator />
+                      <div className="ml-5 mb-2  text-base mt-4">
+                        <div className="text-base">
+                          Gross Margin : {eliz?.grossMargin} %
+                        </div>
+                        <div className="text-base">
+                          Operating Margin: {eliz?.operatingMargin} %
+                        </div>
+                        <div className="text-base">
+                          Net Profit Margin: {eliz?.netProfitMargin} %
+                        </div>
+                      </div>
                     </div>
-                    <div className="text-base">
-                      Operating Margin: {eliz?.operatingMargin} %
-                    </div>
-                    <div className="text-base">
-                      Projected Valuation: $ {eliz?.projectedValuation} billion
+                    <div className=" w-[40%] ">
+                      <div className="text-gray-800 text-lg mt-5 mb-2">
+                        Valuation
+                      </div>
+                      <Separator />
+                      <div className="ml-5 mb-2  text-base mt-4">
+                        <div className="text-base">
+                          Latest Valuation: $ {eliz?.latestValuation} billion
+                        </div>
+                        <div className="text-base">
+                          EBITDA: $ {eliz?.ebitda} million
+                        </div>
+                        <div className="text-base">
+                          Projected Valuation: $ {eliz?.projectedValuation} billion
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
+                </>
+              )}
             </div>
           </div>
         </div>

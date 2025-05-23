@@ -23,7 +23,11 @@ export const createCompany= mutation({
         projectedValuation:v.string(),
         currentRevenue:v.string(),
         revenueIncreased:v.string(),
-        companyVerified:v.string()
+        companyVerified:v.string(),
+        yearsOfExperience:v.string(),
+        achievementRate:v.string(), 
+        marketSize:v.string(),
+        mvpSuccessRate:v.string(),
         
        
     },

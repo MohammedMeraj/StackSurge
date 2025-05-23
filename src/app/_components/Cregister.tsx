@@ -49,38 +49,22 @@ const formSchema = z.object({
   companyEmail: z.string().min(5, {
     message: "Company Email must be at least 5 characters.",
   }),
-  grossMargin: z.string().min(1, {
-    message: "At leaststring 1 characters.",
-  }),
-  netProfitMargin: z.string().min(1, {
-    message: "At least 1 characters.",
-  }),
-  operatingMargin: z.string().min(1, {
-    message: "At least 1 characters.",
-  }),
-  freeCashFlow: z.string().min(1, {
-    message: "At least 1 characters.",
-  }),
-
-  burnRate: z.string().min(1, {
-    message: "At least 1 characters.",
-  }),
-  latestValuation: z.string().min(1, {
-    message: "At least 1 characters.",
-  }),
-  ebitda: z.string().min(1, {
-    message: "At least 1 characters.",
-  }),
-  projectedValuation: z.string().min(1, {
-    message: "At least 1 characters.",
-  }),
-
-  currentRevenue: z.string().min(1, {
-    message: "At least 1 characters.",
-  }),
-  revenueIncreased: z.string().min(1, {
-    message: "At least 1 characters.",
-  }),
+  // Company fields
+  grossMargin: z.string().optional(),
+  netProfitMargin: z.string().optional(),
+  operatingMargin: z.string().optional(),
+  freeCashFlow: z.string().optional(),
+  burnRate: z.string().optional(),
+  latestValuation: z.string().optional(),
+  ebitda: z.string().optional(),
+  projectedValuation: z.string().optional(),
+  currentRevenue: z.string().optional(),
+  revenueIncreased: z.string().optional(),
+  // Startup fields
+  yearsOfExperience: z.string().optional(),
+  achievementRate: z.string().optional(),
+  marketSize: z.string().optional(),
+  mvpSuccessRate: z.string().optional(),
 });
 
 const Page = () => {
@@ -110,8 +94,14 @@ const Page = () => {
       projectedValuation: "",
       currentRevenue: "",
       revenueIncreased: "",
+      yearsOfExperience: "",
+      achievementRate: "",
+      marketSize: "",
+      mvpSuccessRate: "",
     },
   });
+
+  const selectedBusinessType = form.watch("businessType");
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -124,6 +114,8 @@ const Page = () => {
         },
       });
     } else {
+      const isStartup = selectedBusinessType === "Start Up";
+      
       await createCompany({
         email: userEmail ?? "", // Ensure email is always a string
         companyname: form.getValues("companyName"),
@@ -133,16 +125,22 @@ const Page = () => {
         website: form.getValues("website"),
         companyEmail: form.getValues("companyEmail"),
         companyLogo: companyImage ?? "",
-        grossMargin: form.getValues("grossMargin"),
-        netProfitMargin: form.getValues("netProfitMargin"),
-        operatingMargin: form.getValues("operatingMargin"),
-        freeCashFlow: form.getValues("freeCashFlow"),
-        burnRate: form.getValues("burnRate"),
-        latestValuation: form.getValues("latestValuation"),
-        ebitda: form.getValues("ebitda"),
-        projectedValuation: form.getValues("projectedValuation"),
-        currentRevenue: form.getValues("currentRevenue"),
-        revenueIncreased: form.getValues("revenueIncreased"),
+        // Company fields - null if startup
+        grossMargin: isStartup ? "" : (form.getValues("grossMargin") ?? ""),
+        netProfitMargin: isStartup ? "" : (form.getValues("netProfitMargin") ?? ""),
+        operatingMargin: isStartup ? "" : (form.getValues("operatingMargin") ?? ""),
+        freeCashFlow: isStartup ? "" : (form.getValues("freeCashFlow") ?? ""),
+        burnRate: isStartup ? "" : (form.getValues("burnRate") ?? ""),
+        latestValuation: isStartup ? "" : (form.getValues("latestValuation") ?? ""),
+        ebitda: isStartup ? "" : (form.getValues("ebitda") ?? ""),
+        projectedValuation: isStartup ? "" : (form.getValues("projectedValuation") ?? ""),
+        currentRevenue: isStartup ? "" : (form.getValues("currentRevenue") ?? ""),
+        revenueIncreased: isStartup ? "" : (form.getValues("revenueIncreased") ?? ""),
+        // Startup fields - null if company
+        yearsOfExperience: isStartup ? (form.getValues("yearsOfExperience") ?? "") : "",
+        achievementRate: isStartup ? (form.getValues("achievementRate") ?? "") : "",
+        marketSize: isStartup ? (form.getValues("marketSize") ?? "") : "",
+        mvpSuccessRate: isStartup ? (form.getValues("mvpSuccessRate") ?? "") : "",
         companyVerified: "false", // Example value (set this based on your logic)
       });
 
@@ -340,241 +338,336 @@ const Page = () => {
 
               <Separator />
 
-              {/*Profit Margin  &#40; Overall &#41; */}
-              <div className="text-xl">Profit Margin</div>
-              <div className="flex w-full justify-between gap-5">
-                <FormField
-                  control={form.control}
-                  name="grossMargin"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Gross Margin &#40; &#36; &#41; </FormLabel>
-                      <FormControl>
-                        <Input
-                          type="number"
-                          placeholder="Enter Amount"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormDescription>
-                        Company&apos;s Gross Margin
-                      </FormDescription>
+              {/* Conditional rendering based on business type */}
+              {selectedBusinessType === "Start Up" && (
+                <>
+                  <div className="text-xl">Startup Information</div>
+                  <div className="flex w-full justify-between gap-5">
+                    <FormField
+                      control={form.control}
+                      name="yearsOfExperience"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Years of Experience</FormLabel>
+                          <FormControl>
+                            <Input
+                              type="number"
+                              placeholder="Enter Years"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormDescription>
+                            Years of experience in the industry
+                          </FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="achievementRate"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Historical Achievement Rate &#40; &#37; &#41;</FormLabel>
+                          <FormControl>
+                            <Input
+                              type="number"
+                              placeholder="Enter Percentage"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormDescription>
+                            Historical achievement rate percentage
+                          </FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div className="flex w-full justify-between gap-5">
+                    <FormField
+                      control={form.control}
+                      name="marketSize"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Market Size &#40; &#36; &#41;</FormLabel>
+                          <FormControl>
+                            <Input
+                              type="number"
+                              placeholder="Enter Market Size"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormDescription>
+                            Total addressable market size
+                          </FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="mvpSuccessRate"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>MVP Success Rate &#40; &#37; &#41;</FormLabel>
+                          <FormControl>
+                            <Input
+                              type="number"
+                              placeholder="Enter Success Rate"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormDescription>
+                            Minimum viable product success rate
+                          </FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </>
+              )}
 
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="netProfitMargin"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Net Profit Margin &#40; &#36; &#41;</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="number"
-                          placeholder="Enter Amount"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormDescription>
-                        Company&apos;s Net Profit Margin
-                      </FormDescription>
+              {selectedBusinessType === "Company" && (
+                <>
+                  {/*Profit Margin  &#40; Overall &#41; */}
+                  <div className="text-xl">Profit Margin</div>
+                  <div className="flex w-full justify-between gap-5">
+                    <FormField
+                      control={form.control}
+                      name="grossMargin"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Gross Margin &#40; &#36; &#41; </FormLabel>
+                          <FormControl>
+                            <Input
+                              type="number"
+                              placeholder="Enter Amount"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormDescription>
+                            Company&apos;s Gross Margin
+                          </FormDescription>
 
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="operatingMargin"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Operatig Margin &#40; &#36; &#41;</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="number"
-                          placeholder="Enter Amount"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormDescription>
-                        Company&apos;s Operatig Margin
-                      </FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="netProfitMargin"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Net Profit Margin &#40; &#36; &#41;</FormLabel>
+                          <FormControl>
+                            <Input
+                              type="number"
+                              placeholder="Enter Amount"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormDescription>
+                            Company&apos;s Net Profit Margin
+                          </FormDescription>
 
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="operatingMargin"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Operatig Margin &#40; &#36; &#41;</FormLabel>
+                          <FormControl>
+                            <Input
+                              type="number"
+                              placeholder="Enter Amount"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormDescription>
+                            Company&apos;s Operatig Margin
+                          </FormDescription>
 
-              <Separator />
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
 
-              {/*Cash Flow  &#40; Overall &#41; */}
-              <div className="text-xl">Cash Flow</div>
-              <div className="flex w-full justify-between gap-5">
-                <FormField
-                  control={form.control}
-                  name="freeCashFlow"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Free Cash Flow &#40; &#36; &#41; </FormLabel>
-                      <FormControl>
-                        <Input
-                          type="number"
-                          placeholder="Enter Amount"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormDescription>
-                        Company&apos;s Free Cash Flow
-                      </FormDescription>
+                  <Separator />
 
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="burnRate"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Burn Rate &#40; &#36; &#41;</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="number"
-                          placeholder="Enter Amount"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormDescription>
-                        Company&apos;s Burn Rate per month
-                      </FormDescription>
+                  {/*Cash Flow  &#40; Overall &#41; */}
+                  <div className="text-xl">Cash Flow</div>
+                  <div className="flex w-full justify-between gap-5">
+                    <FormField
+                      control={form.control}
+                      name="freeCashFlow"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Free Cash Flow &#40; &#36; &#41; </FormLabel>
+                          <FormControl>
+                            <Input
+                              type="number"
+                              placeholder="Enter Amount"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormDescription>
+                            Company&apos;s Free Cash Flow
+                          </FormDescription>
 
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="burnRate"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Burn Rate &#40; &#36; &#41;</FormLabel>
+                          <FormControl>
+                            <Input
+                              type="number"
+                              placeholder="Enter Amount"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormDescription>
+                            Company&apos;s Burn Rate per month
+                          </FormDescription>
 
-              <Separator />
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
 
-              {/*Valuation &#40; Overall &#41;*/}
-              <div className="text-xl">Company Valuation</div>
-              <div className="flex w-full justify-between gap-5">
-                <FormField
-                  control={form.control}
-                  name="latestValuation"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Latest valuation &#40; &#36; &#41; </FormLabel>
-                      <FormControl>
-                        <Input
-                          type="number"
-                          placeholder="Enter Amount"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormDescription>
-                        Company&apos;s Latest valuation
-                      </FormDescription>
+                  <Separator />
 
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="ebitda"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>EBITDA &#40; &#36; &#41;</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="number"
-                          placeholder="Enter Amount"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormDescription>Company&apos;s EBITDA</FormDescription>
+                  {/*Valuation &#40; Overall &#41;*/}
+                  <div className="text-xl">Company Valuation</div>
+                  <div className="flex w-full justify-between gap-5">
+                    <FormField
+                      control={form.control}
+                      name="latestValuation"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Latest valuation &#40; &#36; &#41; </FormLabel>
+                          <FormControl>
+                            <Input
+                              type="number"
+                              placeholder="Enter Amount"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormDescription>
+                            Company&apos;s Latest valuation
+                          </FormDescription>
 
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="projectedValuation"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        Projected Valuation &#40; &#36; &#41;
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          type="number"
-                          placeholder="Enter Amount"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormDescription>
-                        Company&apos;s Projected Valuation for next 3 years
-                      </FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="ebitda"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>EBITDA &#40; &#36; &#41;</FormLabel>
+                          <FormControl>
+                            <Input
+                              type="number"
+                              placeholder="Enter Amount"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormDescription>Company&apos;s EBITDA</FormDescription>
 
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="projectedValuation"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>
+                            Projected Valuation &#40; &#36; &#41;
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              type="number"
+                              placeholder="Enter Amount"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormDescription>
+                            Company&apos;s Projected Valuation for next 3 years
+                          </FormDescription>
 
-              <Separator />
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
 
-              {/*Revenue Growth*/}
-              <div className="text-xl">Revenue Growth</div>
-              <div className="flex w-full justify-between gap-5">
-                <FormField
-                  control={form.control}
-                  name="currentRevenue"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Current Revenue &#40; &#36; &#41; </FormLabel>
-                      <FormControl>
-                        <Input
-                          type="number"
-                          placeholder="Enter Amount"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormDescription>
-                        Company&apos;s Current Revenue
-                      </FormDescription>
+                  <Separator />
 
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="revenueIncreased"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Revenue increased &#40; &#36; &#41;</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="number"
-                          placeholder="Enter Amount"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormDescription>
-                        Company&apos;s Revenue Increased in last one year
-                      </FormDescription>
+                  {/*Revenue Growth*/}
+                  <div className="text-xl">Revenue Growth</div>
+                  <div className="flex w-full justify-between gap-5">
+                    <FormField
+                      control={form.control}
+                      name="currentRevenue"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Current Revenue &#40; &#36; &#41; </FormLabel>
+                          <FormControl>
+                            <Input
+                              type="number"
+                              placeholder="Enter Amount"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormDescription>
+                            Company&apos;s Current Revenue
+                          </FormDescription>
 
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="revenueIncreased"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Revenue increased &#40; &#36; &#41;</FormLabel>
+                          <FormControl>
+                            <Input
+                              type="number"
+                              placeholder="Enter Amount"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormDescription>
+                            Company&apos;s Revenue Increased in last one year
+                          </FormDescription>
+
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </>
+              )}
 
               <Separator />
 
